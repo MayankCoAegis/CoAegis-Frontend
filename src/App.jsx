@@ -29,7 +29,7 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<Welcome />} />
-            <Route path="/chat" element={<Welcome />} />
+            
           </Route>
       </Routes>
       </BrowserRouter>
