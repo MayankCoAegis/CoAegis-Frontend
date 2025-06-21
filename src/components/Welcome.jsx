@@ -95,7 +95,7 @@ export default function Welcome() {
           </button>
           <button
             onClick={handleSend}
-            className="md:hidden flex items-center gap-2 hover:bg-cyan-600 text-gray-200 text-sm font-medium p-2 px-1.5 rounded-full transition"
+            className="md:hidden flex items-center gap-2 text-gray-200 text-sm font-medium p-2 px-1.5 rounded-full transition"
           >
             {/* <i className="ri-send-plane-fill"></i> */}
             
