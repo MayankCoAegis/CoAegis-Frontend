@@ -113,16 +113,7 @@ function Register() {
                   Register
                 </button>
               </form>
-               <button
-                  onClick={()=>{
-                    setMessage("Registration successful! Please log in.");
-                    setShowSnackBar(true);
-      // navigate("/login");
-                  }}
-                  className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105"
-                >
-                  click here
-                </button>
+              
 
               {/* Login redirect */}
               <p className="text-xs text-center text-gray-400 mt-4 transition hover:scale-105">

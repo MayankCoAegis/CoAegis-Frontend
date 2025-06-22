@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 // import Sidebar from "../../components/Sidebar";
 // import ProfilePanel from "../../components/ProfilePanel";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useLoader } from "../contexts/LoaderContext";
 import Sidebar from "../components/SideBar";
 import SelectModel from "../components/SelectModel";
 import profilepic from '/profile-coaegis.jpeg'
+import { useAuth } from "../contexts/AuthContext";
 
 const ChatLayout = () => {
   const { setLoading } = useLoader();
   const [isSideBarOpen, setisSideBarOpen] = useState(false);
+  const navigate=useNavigate();
+
   return (
     <div className="flex h-screen bg-neutral-950">
       {/* SideMenu Div */}
@@ -50,12 +53,16 @@ const ChatLayout = () => {
             </div>
 
             {/* Profile Image Button */}
-            <div className="w-9 h-9 rounded-lg overflow-hidden cursor-pointer shadow-md/50 border border-neutral-800">
+            {/* <div className="w-9 h-9 rounded-lg overflow-hidden cursor-pointer shadow-md/50 border border-neutral-800">
               <img
                 src={profilepic}
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
+              <p className="text-white text-sm font-semibold">Login</p>
+            </div> */}
+            <div className="flex py-2 px-4 w-auto items-center h-9 rounded-lg overflow-hidden cursor-pointer shadow-md/50 border border-neutral-800" onClick={()=>navigate("/login")}>
+              <p className="text-white text-sm font-semibold">Login</p>
             </div>
           </div>
         </div>

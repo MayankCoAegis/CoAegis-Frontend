@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Welcome() {
   const [message, setMessage] = useState("");
@@ -20,6 +21,8 @@ export default function Welcome() {
       icon: "ri-sliders-line",
     },
   ]);
+
+  
 
   const handleSend = () => {
     if (message.trim() === "") return;
