@@ -1,7 +1,65 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAlert } from "../contexts/AlertContext";
+import { loginUser } from "../api/auth";
+import { useAuth } from "../contexts/AuthContext";
+import { useLoader } from "../contexts/LoaderContext";
 
 function Login() {
   const navigate = useNavigate();
+   const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+
+    const {setShowSnackBar,setMessage}=useAlert()
+    const {user,setUser}=useAuth();
+    const {setLoading}=useLoader();
+
+
+  const handleLogin=async()=>{
+   try{
+    if(!email || !password)
+    {
+      throw new Error("Email and password are required");
+    }
+    setLoading(true); // Start loading
+    const result=await loginUser(email,password);
+    setLoading(false); // Stop loading
+    if(result.success){
+      localStorage.setItem("token", result.token); // Store token in localStorage
+      setUser(result.user);
+      setMessage("User logged in successfully");
+      setShowSnackBar(true);
+      navigate("/chat");
+    }
+    else
+    {
+      throw new Error(result.message);
+    }
+   }
+   catch(err){
+    setLoading(false); // Stop loading
+     console.error("Login failed:", err);
+    setMessage(err.message);
+    setShowSnackBar(true);
+   }
+  }
+
+  const handleInputChange=(e,field)=>{
+    if(field === "email"){
+      setEmail(e.target.value);
+    }else if(field === "password"){
+      setPassword(e.target.value);
+    }
+  }
+
+   useEffect(() => {
+  
+      if(user){
+        console.log("User already authenticated",user);
+        navigate("/chat");
+      }
+      
+    }, [user]);    
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[url('/bglogin2.jpg')] bg-cover bg-center] px-4">
@@ -33,6 +91,8 @@ function Login() {
                   type="email"
                   placeholder="Enter email"
                   className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
+                  value={email}
+                  onChange={(e) => handleInputChange(e, "email")}
                 />
               </div>
 
@@ -43,6 +103,8 @@ function Login() {
                   type="password"
                   placeholder="Enter password"
                   className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
+                  value={password}  
+                  onChange={(e) => handleInputChange(e, "password")}                
                 />
               </div>
 
@@ -51,7 +113,9 @@ function Login() {
                 <p className="text-xs text-cyan-400 cursor-pointer hover:underline transition duration-200 ease-in-out hover:scale-105">
                   Forgot Password?
                 </p>
-                <button className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105">
+                <button 
+                className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105"
+                onClick={handleLogin}>
                   Login
                 </button>
               </div>

@@ -1,8 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 const Sidebar = ({isSideBarOpen,setisSideBarOpen}) => {
-  
+const {user,setUser} = useAuth();
+const navigate = useNavigate();
 
+const handleLogout = () => {
+  localStorage.removeItem("token"); // Remove token from localStorage
+  setUser(null);
+}
   return (
     <>
       {/* Hamburger button (only visible on small screens) */}
@@ -75,9 +82,15 @@ const Sidebar = ({isSideBarOpen,setisSideBarOpen}) => {
           <button className="flex items-center text-gray-200 gap-2 text-sm md:hidden hover:text-cyan-300">
             <i className="ri-user-line text-lg"></i> Account
           </button>
-          <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
-            <i className="ri-login-box-line text-lg"></i> Log out
-          </button>
+          {user?<button
+          onClick={()=>handleLogout()} 
+          className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
+            <i className="ri-login-box-line text-lg"></i> Log Out
+          </button>:<button
+          onClick={()=>navigate("/login")} 
+          className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
+            <i className="ri-login-box-line text-lg"></i> Log In
+          </button>}
         </div>
       </div>
 
