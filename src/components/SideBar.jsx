@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-const Sidebar = ({isSideBarOpen,setisSideBarOpen}) => {
+const Sidebar = ({isSideBarOpen,setisSideBarOpen,chatData,setChatData}) => {
 const {user,setUser} = useAuth();
 const navigate = useNavigate();
 
 const handleLogout = () => {
+  
   localStorage.removeItem("token"); // Remove token from localStorage
   setUser(null);
+  navigate("/login"); // Redirect to login page
 }
   return (
     <>
@@ -31,7 +33,7 @@ const handleLogout = () => {
             <div className="flex items-center justify-start gap-3">
                 
           <i className="ri-wechat-channels-line text-lg"></i>
-          <h1 className="hidden md:block text-xl font-medium tracking-wide text-white">Grok ZeroPoint</h1>
+          <h1 className="hidden md:block text-xl font-medium tracking-wide text-white">CoAegis</h1>
             </div>
             <i class="ri-close-line text-lg md:hidden" onClick={()=>setisSideBarOpen(!isSideBarOpen)}></i>
         </div>
@@ -50,24 +52,18 @@ const handleLogout = () => {
         <div className="flex-1 overflow-y-auto space-y-6">
           <div>
             <p className="text-neutral-400 text-sm mb-4">Chats</p>
-            <ul className="space-y-4">
-              {[
-                "Welcome to Your Smart Finance",
-                "This Is Where Intelligence Meets",
-                "Past Conversations, Future Clarity",
-                "Think of it as Your Digital Friend",
-                "The Pulse of Your Financial Curiosity",
-                "Your Thought Process, Captured",
-              ].map((chat, index) => (
-                <li
+            <div className="flex flex-col gap-4">
+              {chatData.map((chat, index) => (
+                <NavLink
+                  to={`/chat/${chat.chatId}`}
                   key={index}
                   className="text-sm text-gray-200 truncate hover:text-cyan-300 cursor-pointer"
                   onClick={() => setisSideBarOpen(false)} // close on mobile tap
                 >
-                  {chat}
-                </li>
+                  {chat.chat[0].user}
+                </NavLink>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
 
@@ -79,9 +75,9 @@ const handleLogout = () => {
           <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-question-line text-lg"></i> Help Center
           </button>
-          <button className="flex items-center text-gray-200 gap-2 text-sm md:hidden hover:text-cyan-300">
+          {user && <button className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300">
             <i className="ri-user-line text-lg"></i> Account
-          </button>
+          </button>}
           {user?<button
           onClick={()=>handleLogout()} 
           className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">

@@ -52,6 +52,26 @@ export const loginUser = async (email, password) => {
   });
 };
 
+// Dummy function to simulate login (optional)
+export const getResponse = async (payload) => {
+
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      
+        resolve({
+          success: true,
+          message: "Response generated successfully",
+          response:{
+            text:"Unable to generate a response",
+            code:"",
+            image:""
+          }
+        })
+          
+    }, 2500);
+  });
+};
+
 // 🟢 API to verify JWT and get user data
 export const verifyTokenAndGetUser = async (token) => {
   try {

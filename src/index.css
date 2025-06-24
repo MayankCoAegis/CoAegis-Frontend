@@ -17,3 +17,55 @@ html, body {
 padding:0; */
 box-sizing: border-box;
 }
+
+/* Apply this class on any scrollable container */
+.hide-scrollbar {
+  /* Firefox */
+  scrollbar-width: none;
+  /* IE & Edge */
+  -ms-overflow-style: none;
+}
+
+/* Chrome, Safari, Opera – WebKit-based browsers */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Apply this class to any scrollable container */
+.dark-scrollbar {
+  scrollbar-width: thin;                        /* For Firefox */
+  scrollbar-color: #444 #1e1e1e;                /* thumb and track colors for Firefox */
+}
+
+/* For WebKit browsers (Chrome, Safari, Edge) */
+.dark-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.dark-scrollbar::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 8px;
+  border: 2px solid #1e1e1e;
+}
+
+.dark-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #666;
+}
+
+/* Loading dots animation */
+.dots::after {
+  content: '';
+  animation: dots 2s steps(3, end) infinite;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  33% { content: '.'; }
+  66% { content: '..'; }
+  100% { content: '...'; }
+}

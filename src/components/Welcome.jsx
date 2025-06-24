@@ -40,12 +40,12 @@ export default function Welcome() {
 
         {/* Heading */}
         <h1 className="text-white text-xl md:text-3xl font-medium text-shadow-lg">
-          Welcome to <span className="text-cyan-500">Grok ZeroPoint</span>
+          Welcome to <span className="text-cyan-500">CoAegis</span>
         </h1>
 
         {/* Subtext */}
         <p className="text-zinc-500 mt-2 text-sm md:max-w-xl mx-auto">
-          Introducing Grok ZeroPoint — an advanced AI built to challenge
+          Introducing CoAegis — an advanced AI built to challenge
           assumptions, generate fearless ideas, and help you think beyond the
           obvious.Fast. Bold. Unfiltered.
         </p>
@@ -85,7 +85,7 @@ export default function Welcome() {
             <i className="ri-add-line cursor-pointer hover:text-cyan-400 transition"></i>
 
             {/* Mic Icon */}
-            <i className="ri-mic-line cursor-pointer hover:text-cyan-400 transition"></i>
+            {/* <i className="ri-mic-line cursor-pointer hover:text-cyan-400 transition"></i> */}
           </div>
 
           <button

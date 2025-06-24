@@ -54,23 +54,26 @@ function Login() {
 
    useEffect(() => {
   
-      if(user){
-        console.log("User already authenticated",user);
-        navigate("/chat");
-      }
+      // if(user){
+      //   console.log("User already authenticated",user);
+      //   navigate("/chat");
+      // }
       
     }, [user]);    
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('/bglogin2.jpg')] bg-cover bg-center] px-4">
+    <div className="flex items-center justify-center min-h-screen bg-[url('/bglogin3.jpg')] bg-cover bg-center] px-4">
       <div className="flex flex-col md:flex-row w-full md:w-3/5 max-w-5xl h-auto md:h-3/4 rounded-2xl shadow-lg/30 bg-neutral-900  overflow-hidden">
         {/* Left Image */}
-        <div className="w-full md:w-3/5 h-64 md:h-full md:block hidden">
-          <img
+        <div className="w-full md:w-3/5 h-64 md:h-auto md:block hidden md:flex md-items-center md:justify-center relative">
+          {/* <img
             src="/profile2.jpg"
             alt="Login"
             className="h-full w-full object-cover bg"
-          />
+          /> */}
+           <h1 className="text-white text-7xl font-medium text-shadow-lg items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+          Co<span className="text-cyan-400">Aegis</span>
+        </h1>
         </div>
 
         {/* Right Form */}

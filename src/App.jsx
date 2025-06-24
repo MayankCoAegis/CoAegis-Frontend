@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import ProtectedRoute from './routes/ProtectedRoute'
 import ChatLayout from './pages/ChatLayout'
 import Welcome from './components/Welcome'
+import Chat from './components/Chat'
 
 
 function App() {
@@ -29,8 +30,11 @@ function App() {
             </ProtectedRoute>
           }>
             <Route index element={<Welcome />} />
+            <Route path="/chat/:chatId" element={<Chat />} />
             
           </Route>
+
+          <Route path="*" element={<h1 className="text-white text-center text-2xl mt-10">404 - Page Not Found</h1>} />
       </Routes>
       </BrowserRouter>
     </AuthProvider>
