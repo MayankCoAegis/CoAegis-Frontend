@@ -7,7 +7,7 @@ const {user,setUser} = useAuth();
 const navigate = useNavigate();
 
 const handleLogout = () => {
-  
+
   localStorage.removeItem("token"); // Remove token from localStorage
   setUser(null);
   navigate("/login"); // Redirect to login page
@@ -39,7 +39,7 @@ const handleLogout = () => {
         </div>
 
         {/* SubMenu */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1" onClick={()=>navigate("/chat")}>
           <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300">
             <i className="ri-chat-ai-line text-lg"></i> New Chat
           </button>
