@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../pages/ChatLayout";
-import { getResponse } from "../api/auth";
 import { TypeAnimation } from "react-type-animation";
 
 function Chat() {
