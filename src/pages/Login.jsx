@@ -4,10 +4,11 @@ import { useAlert } from "../contexts/AlertContext";
 import { loginUser } from "../api/auth";
 import { useAuth } from "../contexts/AuthContext";
 import { useLoader } from "../contexts/LoaderContext";
+import { isTokenExpired } from "../api/authUtils";
 
 function Login() {
   const navigate = useNavigate();
-   const [email,setEmail] = useState("");
+   const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
 
     const {setShowSnackBar,setMessage}=useAlert()
@@ -17,16 +18,24 @@ function Login() {
 
   const handleLogin=async()=>{
    try{
-    if(!email || !password)
+    if(!username || !password)
     {
-      throw new Error("Email and password are required");
+      throw new Error("Username and password are required");
     }
     setLoading(true); // Start loading
-    const result=await loginUser(email,password);
+    const result=await loginUser(username,password);
     setLoading(false); // Stop loading
     if(result.success){
-      localStorage.setItem("token", result.token); // Store token in localStorage
-      setUser(result.user);
+
+      localStorage.setItem("accessToken", result.access_token); // Store token in localStorage
+      localStorage.setItem("refreshToken", result.refresh_token); // Store token in localStorage
+      
+      let dummyUser={
+           id: 1,
+            name: "Test User",
+            email: "test@gmail.com",
+      }
+      setUser(dummyUser);
       setMessage("User logged in successfully");
       setShowSnackBar(true);
       navigate("/chat");
@@ -38,26 +47,29 @@ function Login() {
    }
    catch(err){
     setLoading(false); // Stop loading
-     console.error("Login failed:", err);
+    //  console.error("Login failed:", err);
     setMessage(err.message);
     setShowSnackBar(true);
    }
   }
 
   const handleInputChange=(e,field)=>{
-    if(field === "email"){
-      setEmail(e.target.value);
+    if(field === "username"){
+      setUsername(e.target.value);
     }else if(field === "password"){
       setPassword(e.target.value);
     }
   }
 
    useEffect(() => {
-  
-      // if(user){
-      //   console.log("User already authenticated",user);
-      //   navigate("/chat");
-      // }
+      setLoading(true);
+      const refreshToken=localStorage.getItem("refreshToken");
+      setLoading(false)
+      if(refreshToken && isTokenExpired(refreshToken))
+      {
+        console.log("User Already Logged in");
+        navigate("/chat")
+      }
       
     }, [user]);    
 
@@ -89,13 +101,13 @@ function Login() {
             <div className="flex flex-col gap-6">
               {/* Email */}
               <div className="flex flex-col gap-1">
-                <label className="text-sm text-gray-400">Email</label>
+                <label className="text-sm text-gray-400">Username</label>
                 <input
-                  type="email"
-                  placeholder="Enter email"
+                  type="text"
+                  placeholder="Enter username"
                   className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
-                  value={email}
-                  onChange={(e) => handleInputChange(e, "email")}
+                  value={username}
+                  onChange={(e) => handleInputChange(e, "username")}
                 />
               </div>
 

@@ -3,7 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { useEffect } from "react";
 import { useAlert } from "../contexts/AlertContext";
 import { useLoader } from "../contexts/LoaderContext";
-import { verifyTokenAndGetUser } from "../api/auth";
+
+import { isTokenExpired } from "../api/authUtils";
 
 const ProtectedRoute = ({ children }) => {
   const { user, setUser } = useAuth();
@@ -13,24 +14,29 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
      setLoading(true); // Start loading
   const checkAuth = async () => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
+    const refreshToken = localStorage.getItem("refreshToken");
+    ;
+    if (refreshToken && isTokenExpired(refreshToken)) {
       try {
-        const userData = await verifyTokenAndGetUser(token);
-        setUser(userData);
+        // const userData = await verifyTokenAndGetUser(token);
+        let dummyUser={
+           id: 1,
+            name: "Test User",
+            email: "test@gmail.com",
+      }
+        setUser(dummyUser);
       } catch (error) {
-        console.error("Invalid or expired token");
+        console.error(error.message);
         setUser(null); // Clear user state if token is invalid
       } finally {
         setLoading(false);
       }
     } else {
-      if (!user) {
-        console.log("No token found, user is not authenticated");
+    
+        console.log("No RefreshToken found, Redirecting to Login");
         setUser(null); // Ensure user state is cleared if no token
         window.location.href = "/login"; // Redirect to login
-      }
+      
       setLoading(false); // Ensure loading stops
     }
   };

@@ -8,9 +8,13 @@ const navigate = useNavigate();
 
 const handleLogout = () => {
 
-  localStorage.removeItem("token"); // Remove token from localStorage
+  localStorage.removeItem("refreshToken"); // Remove token from localStorage
   setUser(null);
   navigate("/login"); // Redirect to login page
+}
+
+const handleAccount=()=>{
+  console.log("User Details",user)
 }
   return (
     <>
@@ -32,8 +36,9 @@ const handleLogout = () => {
         <div className="flex items-center justify-between gap-3">
             <div className="flex items-center justify-start gap-3">
                 
-          <i className="ri-wechat-channels-line text-lg"></i>
-          <h1 className="hidden md:block text-xl font-medium tracking-wide text-white">CoAegis</h1>
+          <i className="ri-wechat-channels-line text-lg text-cyan-500" ></i>
+          <h1 className="hidden md:block text-xl text-cyan-500 font-medium tracking-wide text-white"><span className="text-cyan-500">CoAegis</span></h1>
+          
             </div>
             <i class="ri-close-line text-lg md:hidden" onClick={()=>setisSideBarOpen(!isSideBarOpen)}></i>
         </div>
@@ -75,9 +80,10 @@ const handleLogout = () => {
           <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-question-line text-lg"></i> Help Center
           </button>
-          {user && <button className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300">
+          {user && <button className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300" onClick={()=>{handleAccount()}}>
             <i className="ri-user-line text-lg"></i> Account
           </button>}
+
           {user?<button
           onClick={()=>handleLogout()} 
           className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
