@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useLoader } from "./LoaderContext";
-import { verifyTokenAndGetUser } from "../api/auth";
+
 import { useNavigate } from "react-router-dom";
 
 

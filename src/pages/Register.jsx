@@ -2,23 +2,40 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAlert } from "../contexts/AlertContext";
+import { useLoader } from "../contexts/LoaderContext";
+import {registerUser} from '../api/auth';
 
 function Register() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
+  const [form, setForm] = useState({ username: "", email: "", phone: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState("");
   const {  setShowSnackBar,setMessage } = useAlert();
+
+  const {setLoading}=useLoader();
 
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    const response=await registerUser(form);
+    setLoading(false);
+    if(response.success)
+    {
+      // Email Verification
+
+      setSubmitted(true);
+    }
+    else
+    {
+      setMessage(response.message);
+      setShowSnackBar(true);
+    }
   };
 
   const handleCodeVerify = () => {
@@ -61,13 +78,13 @@ function Register() {
               {/* Form */}
               <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-1">
-                  <label className="text-sm text-gray-400">Full Name</label>
+                  <label className="text-sm text-gray-400">Username</label>
                   <input
                     type="text"
-                    name="name"
+                    name="username"
                     required
                     placeholder="Enter your name"
-                    value={form.name}
+                    value={form.username}
                     onChange={handleChange}
                     className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
                   />

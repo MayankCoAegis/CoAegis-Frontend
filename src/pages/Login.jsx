@@ -26,16 +26,10 @@ function Login() {
     const result=await loginUser(username,password);
     setLoading(false); // Stop loading
     if(result.success){
-
       localStorage.setItem("accessToken", result.access_token); // Store token in localStorage
       localStorage.setItem("refreshToken", result.refresh_token); // Store token in localStorage
+  
       
-      let dummyUser={
-           id: 1,
-            name: "Test User",
-            email: "test@gmail.com",
-      }
-      setUser(dummyUser);
       setMessage("User logged in successfully");
       setShowSnackBar(true);
       navigate("/chat");
@@ -61,17 +55,17 @@ function Login() {
     }
   }
 
-   useEffect(() => {
-      setLoading(true);
-      const refreshToken=localStorage.getItem("refreshToken");
-      setLoading(false)
-      if(refreshToken && isTokenExpired(refreshToken))
-      {
-        console.log("User Already Logged in");
-        navigate("/chat")
-      }
+  //  useEffect(() => {
+  //     setLoading(true);
+  //     const refreshToken=localStorage.getItem("refreshToken");
+  //     setLoading(false)
+  //     if(refreshToken && isTokenExpired(refreshToken))
+  //     {
+  //       console.log("User Already Logged in");
+  //       navigate("/chat")
+  //     }
       
-    }, [user]);    
+  //   }, [user]);    
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[url('/bglogin3.jpg')] bg-cover bg-center] px-4">

@@ -14,7 +14,8 @@ const handleLogout = () => {
 }
 
 const handleAccount=()=>{
-  console.log("User Details",user)
+
+  navigate("/account");
 }
   return (
     <>
@@ -74,9 +75,9 @@ const handleAccount=()=>{
 
         {/* Bottom Actions */}
         <div className="flex flex-col border-t border-gray-700 pt-4 gap-2">
-          <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
+          {/* <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-settings-3-line text-lg"></i> Settings
-          </button>
+          </button> */}
           <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-question-line text-lg"></i> Help Center
           </button>
