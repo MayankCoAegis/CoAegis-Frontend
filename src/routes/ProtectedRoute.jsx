@@ -5,7 +5,7 @@ import { useAlert } from "../contexts/AlertContext";
 import { useLoader } from "../contexts/LoaderContext";
 
 import { isTokenExpired } from "../api/authUtils";
-import { getUser } from "../api/auth";
+import { getUser } from "../api/user";
 
 const ProtectedRoute = ({ children }) => {
   const { user, setUser } = useAuth();
@@ -22,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
         // const userData = await verifyTokenAndGetUser(token);
         console.log("refresh token valid")
         const response=await getUser();
-        console.log("response from get User",response)
+        // console.log("response from get User",response)
        if(response.success)
         setUser(response.user);
       else
@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
       } catch (error) {
         setMessage(error.message)
         setShowSnackBar(true);
-        console.error(error.message);
+        // console.error(error);
         setUser(null); // Clear user state if token is invalid
       } finally {
         setLoading(false);
@@ -38,6 +38,8 @@ const ProtectedRoute = ({ children }) => {
     } else {
     
         console.log("No RefreshToken found, Redirecting to Login");
+        setMessage("Session Expired, Please log in again");
+        setShowSnackBar(true);
         setUser(null); // Ensure user state is cleared if no token
         window.location.href = "/login"; // Redirect to login
       

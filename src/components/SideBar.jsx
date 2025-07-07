@@ -1,22 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import EditAddressModal from "./EditProfileModal";
 
-const Sidebar = ({isSideBarOpen,setisSideBarOpen,chatData,setChatData}) => {
-const {user,setUser} = useAuth();
-const navigate = useNavigate();
+import { useLoader } from "../contexts/LoaderContext";
 
-const handleLogout = () => {
+const Sidebar = ({
+  isSideBarOpen,
+  setisSideBarOpen,
+  chatData,
+  setChatData,
+  chatHistory,
+  setChatHistory
+}) => {
+  const { user, setUser } = useAuth();
+  const navigate = useNavigate();
+  const {setLoading}=useLoader();
 
-  localStorage.removeItem("refreshToken"); // Remove token from localStorage
-  setUser(null);
-  navigate("/login"); // Redirect to login page
-}
+  const handleLogout = () => {
+    localStorage.removeItem("refreshToken"); // Remove token from localStorage
+    setUser(null);
+    navigate("/login"); // Redirect to login page
+  };
 
-const handleAccount=()=>{
+  const handleAccount = () => {
+    setIsModalOpen(true);
+  };
 
-  navigate("/account");
-}
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleChatDelete=(id)=>{
+//TODO
+  }
+
+  
+
   return (
     <>
       {/* Hamburger button (only visible on small screens) */}
@@ -26,7 +49,7 @@ const handleAccount=()=>{
       >
         <i className="ri-menu-line text-xl"></i>
       </button> */}
-
+      <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} />
       {/* Sidebar */}
       <div
         className={`w-72 min-w-[250px] h-screen bg-neutral-950 text-white flex flex-col justify-between p-5 gap-8 fixed z-20 transition-transform duration-300 ${
@@ -35,17 +58,20 @@ const handleAccount=()=>{
       >
         {/* Header */}
         <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center justify-start gap-3">
-                
-          <i className="ri-wechat-channels-line text-lg text-cyan-500" ></i>
-          <h1 className="hidden md:block text-xl text-cyan-500 font-medium tracking-wide text-white"><span className="text-cyan-500">CoAegis</span></h1>
-          
-            </div>
-            <i class="ri-close-line text-lg md:hidden" onClick={()=>setisSideBarOpen(!isSideBarOpen)}></i>
+          <div className="flex items-center justify-start gap-3">
+            <i className="ri-wechat-channels-line text-lg text-cyan-500"></i>
+            <h1 className="hidden md:block text-xl text-cyan-500 font-medium tracking-wide text-white">
+              <span className="text-cyan-500">CoAegis</span>
+            </h1>
+          </div>
+          <i
+            class="ri-close-line text-lg md:hidden"
+            onClick={() => setisSideBarOpen(!isSideBarOpen)}
+          ></i>
         </div>
 
         {/* SubMenu */}
-        <div className="flex flex-col gap-1" onClick={()=>navigate("/chat")}>
+        <div className="flex flex-col gap-1" onClick={() => navigate("/chat")}>
           <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300">
             <i className="ri-chat-ai-line text-lg"></i> New Chat
           </button>
@@ -59,14 +85,15 @@ const handleAccount=()=>{
           <div>
             <p className="text-neutral-400 text-sm mb-4">Chats</p>
             <div className="flex flex-col gap-4">
-              {chatData.map((chat, index) => (
+              {chatHistory && chatHistory.map((chat, index) => (
                 <NavLink
-                  to={`/chat/${chat.chatId}`}
+                  to={`/chat/${chat.id}`}
                   key={index}
                   className="text-sm text-gray-200 truncate hover:text-cyan-300 cursor-pointer"
                   onClick={() => setisSideBarOpen(false)} // close on mobile tap
                 >
-                  {chat.chat[0].user}
+                  {chat.title[0].toUpperCase()+chat.title.slice(1)}
+                  
                 </NavLink>
               ))}
             </div>
@@ -78,22 +105,38 @@ const handleAccount=()=>{
           {/* <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-settings-3-line text-lg"></i> Settings
           </button> */}
-          <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
+          <button
+            className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
+            onClick={() => setIsModalOpen(true)}
+          >
             <i className="ri-question-line text-lg"></i> Help Center
           </button>
-          {user && <button className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300" onClick={()=>{handleAccount()}}>
-            <i className="ri-user-line text-lg"></i> Account
-          </button>}
+          {
+            <button
+              className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300"
+              onClick={() => {
+                handleAccount();
+              }}
+            >
+              <i className="ri-user-line text-lg"></i> Account
+            </button>
+          }
 
-          {user?<button
-          onClick={()=>handleLogout()} 
-          className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
-            <i className="ri-login-box-line text-lg"></i> Log Out
-          </button>:<button
-          onClick={()=>navigate("/login")} 
-          className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
-            <i className="ri-login-box-line text-lg"></i> Log In
-          </button>}
+          {user ? (
+            <button
+              onClick={() => handleLogout()}
+              className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
+            >
+              <i className="ri-login-box-line text-lg"></i> Log Out
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate("/login")}
+              className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
+            >
+              <i className="ri-login-box-line text-lg"></i> Log In
+            </button>
+          )}
         </div>
       </div>
 

@@ -4,14 +4,14 @@ import { isTokenExpired } from "./authUtils";
 
 // Base URL can point to your backend server
 const API = axios.create({
-  baseURL: "https://coaegis-backend.onrender.com",
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
+  timeout: 10000,
 });
 
 // helper API without interceptor
 const API2 = axios.create({
-  baseURL: "https://coaegis-backend.onrender.com",
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_BACKEND_URL,
+  timeout: 10000,
 });
 
 // Request Interceptor – attach access token
@@ -49,7 +49,10 @@ API.interceptors.request.use(async (config) => {
   console.log("Access Token valid")
 
   if (token) {
+
     config.headers.Authorization = `Bearer ${token}`;
+     config.headers['ngrok-skip-browser-warning'] = 'true';
+    console.log('Authorization Header added:', config.headers.Authorization);
    
   } else {
     console.log("No token available - request will be sent without Authorization header");
@@ -123,7 +126,7 @@ export const refreshAccessToken = async () => {
       return response.data.access_token;
     } else throw new Error("Refresh Failed");
   } catch (error) {
-    console.log("Error in login:", error);
+    console.error("Error in login:", error);
     return null;
   }
 };
@@ -151,6 +154,7 @@ export const registerUser = async (form) => {
       throw new Error("Registration failed");
     }
   } catch (error) {
+    console.error(error);
     return {
       success: false,
       message: error?.response?.data?.detail || error.message,
@@ -158,27 +162,24 @@ export const registerUser = async (form) => {
   }
 };
 
-export const getUser = async () => {
-  try {
-    const response = await API.get("/user");
-    console.log(response);
 
-    // Assuming backend returns access and refresh tokens
-    if (response.data.id) {
+
+
+export const VerifyUser = async (token) => {
+  try {
+    
+    const response = await API.get(`/verify/${token}`);
+    console.log("Response from Verification API:", response);
+    if (response.data.message) {
       return {
         success: true,
-        message: "User Fetched Successfully",
-        user: response.data,
+        message: response.data.message,
       };
-    }
-    else
-    {
-      return {
-        success:false,
-        message:"User fetch failed"
-      }
+    } else {
+      throw new Error("Verification failed");
     }
   } catch (error) {
+    console.error(error);
     return {
       success: false,
       message: error?.response?.data?.detail || error.message,

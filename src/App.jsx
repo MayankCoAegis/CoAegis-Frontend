@@ -10,7 +10,10 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import ChatLayout from './pages/ChatLayout'
 import Welcome from './components/Welcome'
 import Chat from './components/Chat'
-import AccountSettings from './pages/AccountSettings'
+import Verify from './pages/Verify'
+import NewPassword from './pages/NewPassword'
+
+
 
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/verify" element={<Verify />} />
+          <Route path="/newpass" element={<NewPassword />} />
+          
 
         {/* Protected Routes */}
           <Route path="/chat" element={
@@ -32,7 +38,7 @@ function App() {
           }>
             <Route index element={<Welcome />} />
             <Route path="/chat/:chatId" element={<Chat />} />
-            <Route path="/chat/account" element={<AccountSettings />} />
+            
             
           </Route>
 

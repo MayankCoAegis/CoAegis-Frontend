@@ -2,20 +2,39 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ChatContext } from "../pages/ChatLayout";
 import { TypeAnimation } from "react-type-animation";
+import { getChatById, getChatResponse } from "../api/chat";
+import { useLoader } from "../contexts/LoaderContext";
 
 function Chat() {
   const [message, setMessage] = useState("");
   const bottomRef = useRef(null);
-  const [chat, setChat] = useState({});
-
-  const { chatData } = useContext(ChatContext);
-
+  const [chat, setChat] = useState([]);
+  const { setLoading } = useLoader();
+  const [generatingResponse,setGeneratingResponse]=useState(false);
+  const {newChatHistory, setNewChatHistory,IsnewChat, setIsnewChat}=useContext(ChatContext);
   const { chatId } = useParams();
-  const [generatingResponse, setGeneratingResponse] = useState(false);
 
   // Filter chat data based on chatId from URL params
   useEffect(() => {
-    setChat(chatData.filter((chat) => chat.chatId == chatId)[0]);
+    if(IsnewChat)
+    {
+      setIsnewChat(false);
+      setChat(newChatHistory);
+      return;
+    }
+    const fetchChat = async () => {
+      const response = await getChatById(chatId);
+      if (response.success) {
+        console.log(`Chat ${chatId} Fetched Successfully`, response.chats);
+        setChat(response.chats);
+        setLoading(false);
+      } else {
+        console.log(`Chat ${chatId} fetch failed`, response.message);
+        setLoading(false);
+      }
+    };
+    setLoading(true);
+    fetchChat();
   }, [chatId]);
 
   // const handleSend = async() => {
@@ -62,56 +81,48 @@ function Chat() {
   // Auto-scroll to bottom on chat render/update
 
   const handleSend = async () => {
-    if (!message.trim()) return;
-
     setGeneratingResponse(true);
 
-    const userMessage = {
-      user: message,
-      time: new Date().toLocaleTimeString(),
-    };
+    if (!message.trim()) return;
 
-    const generatingMessage = {
-      assistant: "Generating response",
-      time: new Date().toLocaleTimeString(),
-      isTemporary: true,
-    };
+    const userText = message;
 
-    // Step 1: Add user's message + generating message
-    setChat((prevChat) => ({
+    // Step 1: Add user's message with empty assistant field (awaiting response)
+    setChat((prevChat) => [
       ...prevChat,
-      chat: [...prevChat.chat, userMessage, generatingMessage],
-    }));
+      {
+        User: userText,
+        Assistant: "Generating response",
+        isTemporary: true,
+        shouldAnimate: false,
+      },
+    ]);
 
-    // Clear message input
+    // Clear input
     setMessage("");
 
-    // Scroll after short delay
     setTimeout(() => {
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
 
-    // Step 2: Wait and simulate response
-    const response = await getResponse(message); // Simulated API call
+    // Step 2: Simulate API response
+    const response = await getChatResponse(chatId, userText);
     console.log("Response from API:", response);
 
-    // Step 3: Replace the last message (generating) with actual response or error
+    // Step 3: Replace the last message with full message containing actual assistant response
     setChat((prevChat) => {
-      const updatedChat = [...prevChat.chat];
-      updatedChat.pop(); // Remove the temporary assistant message
-
-      const finalMessage = {
-        assistant:
-          (response.success && response.response.text) ||
-          "❌ Error: Failed to generate response.",
-        time: new Date().toLocaleTimeString(),
-        animate: true, // Optional: Add animation class if needed
+      const updatedChat = [...prevChat];
+      updatedChat[updatedChat.length - 1] = {
+        User: userText,
+        Assistant:
+          (response.success && response.response) ||
+          "Error: Failed to generate response.",
+        isTemporary: false,
+        shouldAnimate: true,
+        animationDone: false,
       };
 
-      return {
-        ...prevChat,
-        chat: [...updatedChat, finalMessage],
-      };
+      return [...updatedChat];
     });
 
     setGeneratingResponse(false);
@@ -122,47 +133,77 @@ function Chat() {
   }, [chat]);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden items-center">
+    <div className="flex flex-col h-full overflow-hidden items-center md:pt-6 ">
       {/* Chat messages area */}
-      <div className="flex-1 overflow-y-auto px-[10%] md:px-[13%] py-6 space-y-4 md:space-y-6 dark-scrollbar">
-        {chat && chat.chat && chat.chat.length == 0 && (
+      <div className="flex-1 overflow-y-auto px-[6%] md:px-[13%] py-6 w-full space-y-4 md:space-y-6 dark-scrollbar flex flex-col">
+        {chat && chat.length == 0 && (
           <div className="text-center text-gray-400 text-sm">
             Start the conversation...
           </div>
         )}
 
         {chat &&
-          chat.chat &&
-          chat.chat.map((msg, index) => (
-            <div
-              key={index}
-              className={`px-4 py-3 rounded-lg text-sm/7 tracking-wide ${
-                msg.user
-                  ? "bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]"
-                  : "text-gray-200 self-start mr-auto"
-              } ${
-                generatingResponse && msg.assistant && msg.isTemporary
-                  ? "dots"
-                  : ""
-              }`}
-            >
-              {/* {msg.user || msg.assistant} */}
+          chat.map((msgObject, index) => {
+            const { User, Assistant } = msgObject;
+            return (
+              // <div key={index}>
+              //   {User && (
+              //     <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
+              //       <span>{User}</span>
+              //     </div>
+              //   )}
 
-              {msg.assistant && msg.animate ? (
-                <TypeAnimation
-                  sequence={[msg.assistant]}
-                  wrapper="span"
-                  cursor={false}
-                  speed={50}
-                  style={{ whiteSpace: "pre-line", display: "inline-block" }}
-                />
-              ) : msg.assistant ? (
-                <span>{msg.assistant}</span>
-              ) : null}
+              //   {/* {Assistant  && (
+              //     <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+              //       dangerouslySetInnerHTML={parseText(Assistant)}>
+              //     </div>
+              //   )} */}
 
-              {msg.user && <span>{msg.user}</span>}
-            </div>
-          ))}
+              //   {msgObject.isTemporary ? (
+              //     <TypeAnimation
+              //       sequence={[
+              //         "Generating response.",
+              //         500,
+              //         "Generating response..",
+              //         500,
+              //         "Generating response...",
+              //         500,
+              //       ]}
+              //       cursor={false}
+              //       speed={50}
+              //       repeat={Infinity}
+              //       className="items-center p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+              //     />
+              //   ) : msgObject.shouldAnimate && !msgObject.animationDone ? (
+              //     <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap">
+              //       <TypeAnimation
+              //         sequence={Assistant}
+              //         cursor={false}
+              //         speed={100}
+              //         repeat={0}
+              //         onFinished={() => {
+              //           // Set animationDone = true for this message
+              //           setChat((prevChat) => {
+              //             const updated = [...prevChat];
+              //             updated[index] = {
+              //               ...updated[index],
+              //               animationDone: true,
+              //             };
+              //             return updated;
+              //           });
+              //         }}
+              //       />
+              //     </div>
+              //   ) : (
+              //     <div
+              //       className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+              //       dangerouslySetInnerHTML={parseText(Assistant)}
+              //     ></div>
+              //   )}
+              // </div>
+              ChatMessage({ msgObject, index, chat, setChat })
+            );
+          })}
 
         <div ref={bottomRef}></div>
       </div>
@@ -188,6 +229,7 @@ function Chat() {
 
           <button
             onClick={handleSend}
+            disabled={generatingResponse}
             className="hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
           >
             Send
@@ -195,7 +237,8 @@ function Chat() {
 
           <button
             onClick={handleSend}
-            className="md:hidden flex items-center gap-2 text-gray-200 text-sm font-medium p-2 px-1.5 rounded-full transition"
+            disabled={generatingResponse}
+            className={generatingResponse?"md:hidden flex items-center gap-2 bg-gray-400  text-neutral-300 text-sm font-medium px-4 py-1.5 rounded-md transition":"md:hidden  flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"}
           >
             <i className="ri-send-plane-fill text-lg"></i>
           </button>
@@ -206,3 +249,143 @@ function Chat() {
 }
 
 export default Chat;
+
+function parseText(text) {
+  // Escape HTML characters
+  text = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Bold headings
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  // Links
+  text = text.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
+  // Code block
+  text = text.replace(
+    /```([\s\S]+?)```/g,
+    (_, code) => `<pre>${code.trim()}</pre>`
+  );
+
+  // Bullet points: * Item
+  text = text.replace(/(^|\n)\* (.+)/g, "$1<ul><li>$2</li></ul>");
+  text = text.replace(/<\/ul>\n<ul>/g, ""); // merge
+
+  // Numbered lists: 1. Item
+  text = text.replace(/(^|\n)(\d+)\. (.+)/g, "$1@@@NUM@@@$3");
+
+  const lines = text.split("\n");
+  let inOl = false;
+  let output = "";
+
+  for (let line of lines) {
+    if (line.startsWith("@@@NUM@@@")) {
+      if (!inOl) {
+        output += "<ol>";
+        inOl = true;
+      }
+      output += `<li>${line.replace("@@@NUM@@@", "").trim()}</li>`;
+    } else {
+      if (inOl) {
+        output += "</ol>";
+        inOl = false;
+      }
+      output += "\n" + line;
+    }
+  }
+  if (inOl) output += "</ol>";
+
+  text = output;
+
+  // Paragraphs
+  text = text
+    .split("\n\n")
+    .map((para) => {
+      if (
+        para.startsWith("<ul>") ||
+        para.startsWith("<ol>") ||
+        para.startsWith("<pre>") ||
+        para.includes("<li>")
+      ) {
+        return para;
+      }
+      return `<p>${para.trim()}</p>`;
+    })
+    .join("");
+
+  return { __html: text };
+}
+
+
+
+function ChatMessage({ msgObject, index, chat, setChat }) {
+  const assistantMessage = msgObject.Assistant;
+
+  // Message display logic
+  let content;
+
+  if (msgObject.isTemporary) {
+    // Show "Generating response..." with looping dots
+    content = (
+      <TypeAnimation
+        sequence={[
+          "Generating response.",
+          500,
+          "Generating response..",
+          500,
+          "Generating response...",
+          500,
+        ]}
+        repeat={Infinity}
+        cursor={false}
+        speed={50}
+        className="items-center p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+      />
+    );
+  } else if (msgObject.shouldAnimate && !msgObject.animationDone) {
+    // Animate final assistant message
+    content = (
+      <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap">
+        <TypeAnimation
+          sequence={[assistantMessage,() => {
+            setChat((prevChat) => {
+              const updated = [...prevChat];
+              updated[index] = {
+                ...updated[index],
+                animationDone: true,
+              };
+              return updated;
+            });
+          }]}
+          cursor={false}
+          speed={100}
+          repeat={0}
+          
+        />
+      </div>
+    );
+  } else {
+    // Show parsed message (bold, code, etc.) after animation is done or on reload
+    content = (
+      <div
+        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+        dangerouslySetInnerHTML={parseText(assistantMessage)}
+      />
+    );
+  }
+
+  return <div key={index}>
+      {msgObject.User && (
+                  <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
+                    {msgObject.User}
+                  </div>
+                )}
+      {content}
+    </div>
+  
+}

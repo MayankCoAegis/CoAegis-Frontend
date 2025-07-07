@@ -1,5 +1,10 @@
-import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useEffect, useRef, useState } from "react";
+
+import { getChatResponse } from "../api/chat";
+import { TypeAnimation } from "react-type-animation";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ChatContext } from "../pages/ChatLayout";
 
 export default function Welcome() {
   const [message, setMessage] = useState("");
@@ -21,51 +26,127 @@ export default function Welcome() {
       icon: "ri-sliders-line",
     },
   ]);
+  const [showChat, setShowChat] = useState(false);
+  const [chat, setChat] = useState([]);
+  const bottomRef = useRef(null);
+  const [generatingResponse, setGeneratingResponse] = useState(false);
+  const navigate = useNavigate();
+  const { chatHistory, setChatHistory,setNewChatHistory,setIsnewChat } = useContext(ChatContext);
 
-  
+  const handleSend = async () => {
+    setGeneratingResponse(true);
+    setShowChat(true);
+    if (!message.trim()) return;
 
-  const handleSend = () => {
-    if (message.trim() === "") return;
-    console.log("Sending message:", message);
-    // Add your send logic here
-    setMessage(""); // Clear input after sending
+    const userText = message;
+
+    // Step 1: Add user's message with empty assistant field (awaiting response)
+    setChat((prevChat) => [
+      ...prevChat,
+      {
+        User: userText,
+        Assistant: "Generating response",
+        isTemporary: true,
+        shouldAnimate: false,
+      },
+    ]);
+
+    // Clear input
+    setMessage("");
+
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+
+    // Step 2: Simulate API response
+    const response = await getChatResponse("new", userText);
+    console.log("Response from API:", response);
+    if (response.success) {
+      setChatHistory((prevChatHistory) => [
+        ...prevChatHistory,
+        {
+          id: response.session_id,
+          title: response.session_title,
+        },
+      ]);
+      setIsnewChat(true);
+      setNewChatHistory([{User:message,Assistant:response.response,isTemporary:false,shouldAnimate:true,animationDone:false}]);
+      navigate(`/chat/${response.session_id}`);
+    }
+
+    // Step 3: Replace the last message with full message containing actual assistant response
+    setChat((prevChat) => {
+      const updatedChat = [...prevChat];
+      updatedChat[updatedChat.length - 1] = {
+        User: userText,
+        Assistant:
+          "Error: Failed to generate response.",
+        isTemporary: false,
+        shouldAnimate: true,
+        animationDone: false,
+      };
+
+      return [...updatedChat];
+    });
+
+    setGeneratingResponse(false);
   };
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
   return (
-    <div className="md:static flex flex-col items-center justify-center md:h-full p-4 md:p-0 md:m-0 w-full gap-2">
-      <div className="text-center px-4">
-        {/* Logo */}
-        <div className="flex justify-center mb-4">
-          <i class="ri-wechat-channels-line text-4xl text-white"></i>
+    <div className="md:static flex flex-col items-center justify-center md:h-full p-4 md:p-0 md:px-2 md:m-0 w-full gap-2">
+      {!showChat && (
+        <div className="text-center px-4">
+          {/* Logo */}
+          <div className="flex justify-center mb-4">
+            <i class="ri-wechat-channels-line text-4xl text-white"></i>
+          </div>
+
+          {/* Heading */}
+          <h1 className="text-white text-xl md:text-3xl font-medium text-shadow-lg">
+            Welcome to <span className="text-cyan-500">CoAegis</span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="text-zinc-500 mt-2 text-sm md:max-w-xl mx-auto">
+            Introducing CoAegis — an advanced AI built to challenge assumptions,
+            generate fearless ideas, and help you think beyond the obvious.Fast.
+            Bold. Unfiltered.
+          </p>
         </div>
-
-        {/* Heading */}
-        <h1 className="text-white text-xl md:text-3xl font-medium text-shadow-lg">
-          Welcome to <span className="text-cyan-500">CoAegis</span>
-        </h1>
-
-        {/* Subtext */}
-        <p className="text-zinc-500 mt-2 text-sm md:max-w-xl mx-auto">
-          Introducing CoAegis — an advanced AI built to challenge
-          assumptions, generate fearless ideas, and help you think beyond the
-          obvious.Fast. Bold. Unfiltered.
-        </p>
-      </div>
+      )}
 
       {/* Sample Prompts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 px-0 max-w-4xl mx-auto md:mt-8">
-        {prompts.map((prompt, index) => (
-          <div
-            key={index}
-            className="bg-[#121212] text-white p-4 rounded-xl shadow-lg border border-gray-800 hover:border-cyan-500 cursor-pointer transition"
-          >
-            <p className="text-sm mb-4 text-zinc-400">{prompt.text}</p>
-            <i className={`${prompt.icon} text-xl text-gray-400`}></i>
-          </div>
-        ))}
-      </div>
+      {!showChat && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4 px-0 max-w-4xl mx-auto md:mt-8">
+          {prompts.map((prompt, index) => (
+            <div
+              key={index}
+              className="bg-[#121212] text-white p-4 rounded-xl shadow-lg border border-gray-800 hover:border-cyan-500 cursor-pointer transition"
+            >
+              <p className="text-sm mb-4 text-zinc-400">{prompt.text}</p>
+              <i className={`${prompt.icon} text-xl text-gray-400`}></i>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {/* Helper div for mobile view */}
-        <div className="md:hidden bg-neutral-900 fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
+      {/* Chat messages area */}
+      {showChat && (
+        <div className="flex-1 overflow-y-auto px-[6%] md:mt-6 md:px-[13%] w-full py-6 space-y-4 md:space-y-6 dark-scrollbar flex flex-col">
+          {chat &&
+            chat.map((msgObject, index) => {
+              return ChatMessage({ msgObject, index, chat, setChat });
+            })}
+
+          <div ref={bottomRef}></div>
+        </div>
+      )}
+
+      {/* Helper div for mobile view */}
+      <div className="md:hidden bg-neutral-900 fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
       {/* Input Box */}
       <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static bg-[#0e0e0e] rounded-xl md:p-4 md:w-full max-w-4xl mx-auto shadow-lg border border-gray-800">
         {/* Input area */}
@@ -79,7 +160,6 @@ export default function Welcome() {
 
         {/* Bottom Bar with Send Button */}
         <div className="flex justify-between mt-2 items-center">
-
           <div className="flex flex-1 items-center justify-start gap-4 text-white text-lg md:p-2">
             {/* Plus Icon */}
             <i className="ri-add-line cursor-pointer hover:text-cyan-400 transition"></i>
@@ -90,10 +170,14 @@ export default function Welcome() {
 
           <button
             onClick={handleSend}
-            className="hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
+            disabled={generatingResponse}
+            className={
+              generatingResponse
+                ? "hidden md:block flex items-center gap-2 bg-gray-400  text-neutral-300 text-sm font-medium px-4 py-1.5 rounded-md transition"
+                : "hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
+            }
           >
             {/* <i className="ri-send-plane-fill"></i> */}
-            
             Send
           </button>
           <button
@@ -101,7 +185,7 @@ export default function Welcome() {
             className="md:hidden flex items-center gap-2 text-gray-200 text-sm font-medium p-2 px-1.5 rounded-full transition"
           >
             {/* <i className="ri-send-plane-fill"></i> */}
-            
+
             <i className="ri-send-plane-fill text-lg"></i>
           </button>
         </div>
@@ -109,3 +193,155 @@ export default function Welcome() {
     </div>
   );
 }
+
+function parseText(text) {
+  // Escape HTML characters
+  text = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Bold headings
+  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  // Links
+  text = text.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
+  // Code block
+  text = text.replace(
+    /```([\s\S]+?)```/g,
+    (_, code) => `<pre>${code.trim()}</pre>`
+  );
+
+  // Bullet points: * Item
+  text = text.replace(/(^|\n)\* (.+)/g, "$1<ul><li>$2</li></ul>");
+  text = text.replace(/<\/ul>\n<ul>/g, ""); // merge
+
+  // Numbered lists: 1. Item
+  text = text.replace(/(^|\n)(\d+)\. (.+)/g, "$1@@@NUM@@@$3");
+
+  const lines = text.split("\n");
+  let inOl = false;
+  let output = "";
+
+  for (let line of lines) {
+    if (line.startsWith("@@@NUM@@@")) {
+      if (!inOl) {
+        output += "<ol>";
+        inOl = true;
+      }
+      output += `<li>${line.replace("@@@NUM@@@", "").trim()}</li>`;
+    } else {
+      if (inOl) {
+        output += "</ol>";
+        inOl = false;
+      }
+      output += "\n" + line;
+    }
+  }
+  if (inOl) output += "</ol>";
+
+  text = output;
+
+  // Paragraphs
+  text = text
+    .split("\n\n")
+    .map((para) => {
+      if (
+        para.startsWith("<ul>") ||
+        para.startsWith("<ol>") ||
+        para.startsWith("<pre>") ||
+        para.includes("<li>")
+      ) {
+        return para;
+      }
+      return `<p>${para.trim()}</p>`;
+    })
+    .join("");
+
+  return { __html: text };
+}
+
+function ChatMessage({ msgObject, index, chat, setChat }) {
+  const assistantMessage = msgObject.Assistant;
+
+  // Message display logic
+  let content;
+
+  if (msgObject.isTemporary) {
+    // Show "Generating response..." with looping dots
+    content = (
+      <TypeAnimation
+        sequence={[
+          "Generating response.",
+          500,
+          "Generating response..",
+          500,
+          "Generating response...",
+          500,
+        ]}
+        repeat={Infinity}
+        cursor={false}
+        speed={50}
+        className="flex items-center p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+      />
+    );
+  } else if (msgObject.shouldAnimate && !msgObject.animationDone) {
+    // Animate final assistant message
+    content = (
+      <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap">
+        <TypeAnimation
+          sequence={[
+            assistantMessage,
+            () => {
+              setChat((prevChat) => {
+                const updated = [...prevChat];
+                updated[index] = {
+                  ...updated[index],
+                  animationDone: true,
+                };
+                return updated;
+              });
+            },
+          ]}
+          cursor={false}
+          speed={100}
+          repeat={0}
+        />
+      </div>
+    );
+  } else {
+    // Show parsed message (bold, code, etc.) after animation is done or on reload
+    content = (
+      <div
+        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+        dangerouslySetInnerHTML={parseText(assistantMessage)}
+      />
+    );
+  }
+
+  return (
+    <div key={index}>
+      {msgObject.User && (
+        <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
+          {msgObject.User}
+        </div>
+      )}
+      {content}
+    </div>
+  );
+}
+
+// const getChatResponse = async () => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve({
+//         success: true,
+//         response: "Hello, how can I help you today?",
+//       });
+//     }, 5000);
+//   });
+// };
