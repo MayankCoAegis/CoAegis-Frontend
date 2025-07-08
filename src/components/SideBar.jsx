@@ -85,7 +85,7 @@ const Sidebar = ({
           <div>
             <p className="text-neutral-400 text-sm mb-4">Chats</p>
             <div className="flex flex-col gap-4">
-              {chatHistory && chatHistory.map((chat, index) => (
+              {chatHistory && chatHistory.length > 0 && chatHistory.map((chat, index) => (
                 <NavLink
                   to={`/chat/${chat.id}`}
                   key={index}

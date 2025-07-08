@@ -49,7 +49,7 @@ API.interceptors.request.use(async (config) => {
 
 export const getUserChats = async () => {
   try {
-    const response = await API.get("/user/chats");
+    const response = await API.get("/user/chats/");
 
     
     if (response.data) {
@@ -77,7 +77,7 @@ export const getUserChats = async () => {
 
 export const getChatById = async (id) => {
   try {
-    const response = await API.get(`/user/chats/${id}`);
+    const response = await API.get(`/user/chats/${id}/`);
 
     
     if (response.data) {
@@ -112,7 +112,7 @@ export const getChatResponse = async (id, message) => {
       const formData = new URLSearchParams();
       formData.append("text", message);
 console.log('url',`/user/chats/${id}/text`)
-    const response = await API.post(`/user/chats/${id}/text`,formData, {
+    const response = await API.post(`/user/chats/${id}/text/`,formData, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -149,7 +149,7 @@ console.log('url',`/user/chats/${id}/text`)
 
 export const DeleteChatById = async (id) => {
   try {
-    const response = await API.delete(`/user/chats/${id}/delete`);
+    const response = await API.delete(`/user/chats/${id}/delete/`);
 
     
     if (response.data.message=="Session deleted successfully.") {
