@@ -95,7 +95,7 @@ const Sidebar = ({
         </div>
 
         {/* Chat Sessions */}
-        <div className="flex-1 overflow-y-auto space-y-6">
+        <div className="flex-1 overflow-y-auto space-y-6 dark-scrollbar">
           <div>
             <p className="text-neutral-400 text-sm mb-4">Chats</p>
             <div className="flex flex-col gap-4">
