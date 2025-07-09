@@ -154,8 +154,8 @@ function Register() {
             <>
               {/* Verification Section */}
               <div className="flex flex-col gap-4 justify-center flex-1 text-center">
-                <h2 className="text-xl font-semibold text-white">Check your inbox</h2>
-                <p className="text-sm text-gray-400">
+                <h2 className="text-xl font-semibold text-white">Check your inbox for email verification.</h2>
+                {/* <p className="text-sm text-gray-400">
                   Enter the verification code we just sent to{" "}
                   <span className="text-cyan-400">{form.email}</span>.
                 </p>
@@ -173,7 +173,7 @@ function Register() {
                   className="bg-cyan-600 hover:bg-cyan-500 text-white text-sm rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105"
                 >
                   Verify
-                </button>
+                </button> */}
               </div>
             </>
           )}

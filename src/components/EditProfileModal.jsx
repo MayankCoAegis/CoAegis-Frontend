@@ -66,7 +66,7 @@ export default function EditAddressModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs">
-      <div className="mx-4 max-h-9/10 md:w-[650px] md:h-3/4 bg-[#2f2f2f] rounded-lg shadow-lg flex flex-col md:flex-row overflow-y-auto dark-scrollbar">
+      <div className="mx-4 min-h-7/10 max-h-9/10 md:w-[650px] md:h-3/4 bg-[#2f2f2f] rounded-lg shadow-lg flex flex-col md:flex-row overflow-y-auto dark-scrollbar">
 
         {/* Left Div Menu */}
         <div className="md:w-[180px] bg-[#2a2a2a] rounded-t-lg md:rounded-l-lg p-2">

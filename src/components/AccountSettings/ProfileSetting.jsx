@@ -58,7 +58,7 @@ const ProfileSetting = () => {
      <div className="flex justify-end py-2">
             <button
            
-            className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-5 py-2 rounded-md text-sm"
+            className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-4 py-2 rounded-md text-xs"
           >
             Edit Profile
           </button>

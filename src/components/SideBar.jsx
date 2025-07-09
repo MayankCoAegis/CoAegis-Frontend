@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import EditAddressModal from "./EditProfileModal";
 
 import { useLoader } from "../contexts/LoaderContext";
+import SearchModal from "./SearchModal";
 
 const Sidebar = ({
   isSideBarOpen,
@@ -19,23 +20,35 @@ const Sidebar = ({
 
   const handleLogout = () => {
     localStorage.removeItem("refreshToken"); // Remove token from localStorage
+    setisSideBarOpen(false);
     setUser(null);
     navigate("/login"); // Redirect to login page
   };
 
   const handleAccount = () => {
     setIsModalOpen(true);
+    setisSideBarOpen(false);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
 
+  const handleSearchModalClose = () => {
+    setIsSearchModalOpen(false);
+  };
+
   const handleChatDelete=(id)=>{
 //TODO
+  }
+
+  const handleSearch=()=>{
+    setisSideBarOpen(false);
+
   }
 
   
@@ -49,6 +62,7 @@ const Sidebar = ({
       >
         <i className="ri-menu-line text-xl"></i>
       </button> */}
+      <SearchModal isOpen={isSearchModalOpen} onClose={handleSearchModalClose} />
       <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} />
       {/* Sidebar */}
       <div
@@ -71,11 +85,11 @@ const Sidebar = ({
         </div>
 
         {/* SubMenu */}
-        <div className="flex flex-col gap-1" onClick={() => navigate("/chat")}>
-          <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300">
+        <div className="flex flex-col gap-1" >
+          <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300" onClick={() => {setisSideBarOpen(false),navigate("/chat")}}>
             <i className="ri-chat-ai-line text-lg"></i> New Chat
           </button>
-          <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300">
+          <button className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300" onClick={() => {setisSideBarOpen(false),setIsSearchModalOpen(true)}}>
             <i className="ri-search-eye-line text-lg"></i> Search Chat
           </button>
         </div>
@@ -107,7 +121,7 @@ const Sidebar = ({
           </button> */}
           <button
             className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {setisSideBarOpen(false)}}
           >
             <i className="ri-question-line text-lg"></i> Help Center
           </button>

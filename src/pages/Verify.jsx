@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLoader } from "../contexts/LoaderContext";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { VerifyUser } from "../api/auth";
 import { useAlert } from "../contexts/AlertContext";
 
@@ -10,6 +10,18 @@ function Verify() {
     const {setMessage,setShowSnackBar}=useAlert();
     const [isRequestSent, setIsRequestSent] = useState(false);
      const [searchParams] = useSearchParams();
+     const navigate=useNavigate();
+
+
+     const handleLogin=async(access_token,refresh_token)=>{
+        localStorage.setItem("accessToken", access_token); // Store token in localStorage
+        localStorage.setItem("refreshToken", refresh_token); // Store token in localStorage
+  
+      
+      setMessage("User logged in successfully");
+      setShowSnackBar(true);
+      navigate("/chat");
+     }
 
     useEffect(()=>{
 
@@ -20,6 +32,7 @@ function Verify() {
                 setShowSnackBar(true);
                 setIsRequestSent(true);
                 setLoading(false);
+                handleLogin(response.access_token,response.refresh_token);
             }
             else
             {
@@ -33,8 +46,9 @@ function Verify() {
         setLoading(true);
         if(!token)
         {
-            setMessage("Token Not Found");
+            setMessage("Invalid verification URL");
             setShowSnackBar(true);
+            setLoading(false);
             return;
         }
         SendReq();
@@ -43,7 +57,7 @@ function Verify() {
     },[])
         return (
             <div className="flex flex-col items-center justify-center h-screen">
-                <h1 className="text-2xl font-semibold mb-4 text-gray-800">{isRequestSent ? "Verification email sent successfully" : "Couldn't send verification request"}</h1>
+                <h1 className="text-2xl !font-medium mb-4 text-gray-200">{isRequestSent ? "Verification successfull" : "Couldn't send verification request"}</h1>
             </div>
         );
     }

@@ -145,7 +145,7 @@ export const registerUser = async (form) => {
       },
     });
     console.log("Response from Register User:", response);
-    if (response.data.message == "User created successfully.") {
+    if (response.data.message) {
       return {
         success: true,
         message: response.data.message,
@@ -174,6 +174,8 @@ export const VerifyUser = async (token) => {
       return {
         success: true,
         message: response.data.message,
+        access_token: response.data.access_token,
+        refresh_token: response.data.refresh_token,
       };
     } else {
       throw new Error("Verification failed");

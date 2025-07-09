@@ -70,14 +70,14 @@ const SecuritySettings = () => {
       <div className="flex justify-end gap-4">
         <button
           onClick={handleEnable2FA}
-          className="bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white px-5 py-2 rounded-md text-sm"
+          className="bg-[#3a3a3a] hover:bg-[#4a4a4a] text-white px-5 py-2 rounded-md text-xs"
         >
         Enable 2FA
         </button>
 
         <button
           onClick={handleChangePassword}
-          className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-5 py-2 rounded-md text-sm"
+          className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-5 py-2 rounded-md text-xs"
         >
         Change Password
         </button>

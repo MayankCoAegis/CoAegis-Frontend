@@ -396,7 +396,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
     // Show parsed message (bold, code, etc.) after animation is done or on reload
     content = (
       <div
-        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
         dangerouslySetInnerHTML={parseText(assistantMessage)}
       />
     );
@@ -404,7 +404,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
 
   return <div key={index}>
       {msgObject.User && (
-                  <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/6 md:text-sm/6 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
+                  <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
                     {msgObject.User}
                   </div>
                 )}
