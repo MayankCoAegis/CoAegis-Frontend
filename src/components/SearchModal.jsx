@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
+import { SearchChat } from '../api/search';
+import { useNavigate } from 'react-router-dom';
+import { useLoader } from '../contexts/LoaderContext';
 
 export default function SearchModal({ isOpen,onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const {setLoading}=useLoader();
+  const navigate=useNavigate();
 
-  const handleSearch = () => {
+  const handleSearch = async() => {
+    setLoading(true);
     console.log('Searching for:', searchQuery);
+    const response=await SearchChat(searchQuery);
+    setLoading(false);
+    if(response.success) setSearchResults(response.chats);
     // Future: trigger API or filtering logic
   };
 
@@ -47,15 +57,15 @@ export default function SearchModal({ isOpen,onClose }) {
         </div>
 
         {/* Results Section */}
-        <div className="mt-2 text-white flex flex-col flex-1 rounded-md p-3 overflow-y-auto dark-scrollbar md:p-2 gap-5 !text-xs md:text-sm md:!text-gray-400">
-          <div className='flex flex-row !text-xs md:!text-sm !text-gray-200 gap-2 items-center cursor-pointer'>
+        <div className="mt-2 text-white flex flex-col flex-1 rounded-md p-3 overflow-y-auto dark-scrollbar md:p-2  md:px-3 gap-5 !text-xs md:text-sm md:!text-gray-400">
+          {searchResults && searchResults.length > 0 && searchResults.map((chat, index) => (
+            <div className='flex flex-row !text-xs md:!text-sm !text-gray-200 gap-2 md:gap-3 items-center cursor-pointer hover:!text-cyan-400 transition duration-200 '  key={index}
+            onClick={()=>{onClose(),navigate(`/chat/${chat.id}`)}}>
             <i class="ri-chat-1-line text-md md:text-lg"></i>
-            <span>Lorem Ipsum 1</span>
+            <span>{chat.title[0].toUpperCase() + chat.title.slice(1)}</span>
           </div>
-           <div className='flex flex-row text-xs md:text-sm text-gray-200 gap-2 items-center cursor-pointer'>
-            <i class="ri-chat-1-line text-md md:text-lg"></i>
-            <span>Lorem Ipsum 2</span>
-          </div>
+          ))}
+           
         </div>
       </div>
     </div>

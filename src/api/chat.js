@@ -79,7 +79,7 @@ export const getChatById = async (id) => {
   try {
     const response = await API.get(`/user/chats/${id}/`);
 
-    console.log("Response from getChatById:", response);
+    // console.log("Response from getChatById:", response);
     if (response.data) {
       return {
         success: true,
