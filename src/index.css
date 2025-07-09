@@ -97,7 +97,7 @@ box-sizing: border-box;
 }
 
 .assistant-response li::before {
-  content: '•';
+  
   position: absolute;
   left: 0;
   color: #60a5fa; /* Tailwind blue-400 */
@@ -134,7 +134,7 @@ box-sizing: border-box;
 }
 
 .assistant-response strong {
-  display: block;
+  display: inline;
   font-weight: 600;
   margin-top: 1.25rem;
   font-size: 0.875rem;
@@ -155,4 +155,58 @@ box-sizing: border-box;
   overflow-x: auto;
   word-break: break-word;
   max-width: 100%;
+}
+
+
+.assistant-response h1,
+.assistant-response h2,
+.assistant-response h3 {
+  font-weight: 600;
+  color: #e5e7eb; /* Tailwind gray-200 */
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Specific sizes */
+.assistant-response h1 {
+  font-size: 1.25rem; /* text-base (mobile) */
+}
+.assistant-response h2 {
+  font-size: 1.125rem; /* text-sm (mobile) */
+}
+.assistant-response h3 {
+  font-size: 1rem; /* text-xs (mobile) */
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .assistant-response h1 {
+    font-size: 1.5rem; /* md:text-xl */
+  }
+  .assistant-response h2 {
+    font-size: 1.25rem; /* md:text-lg */
+  }
+  .assistant-response h3 {
+    font-size: 1.125rem; /* md:text-base */
+  }
+}
+
+.assistant-response h4 {
+  font-weight: 600;
+  color: #e5e7eb; /* Tailwind gray-200 */
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.25;
+  word-break: break-word;
+  white-space: normal;
+  font-size: 0.875rem; /* text-sm (mobile) */
+}
+
+@media (min-width: 768px) {
+  .assistant-response h4 {
+    font-size: 1rem; /* text-base on md+ screens */
+  }
 }

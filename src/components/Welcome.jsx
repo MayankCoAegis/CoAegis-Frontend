@@ -10,20 +10,20 @@ export default function Welcome() {
   const [message, setMessage] = useState("");
   const [prompts] = useState([
     {
-      text: "Write a to-do list for a personal project or task",
+      text: "Show me vendors with proven expertise in NLP for customer service automation",
       icon: "ri-user-line",
     },
     {
-      text: "Generate an email to reply to a job offer",
+      text: "Filter vendors based on successful project deployments in the insurance industry with measurable ROI",
       icon: "ri-mail-line",
     },
     {
-      text: "Summarise this article or text for me in one paragraph",
+      text: "Identify vendors offering solutions that integrate with ERP",
       icon: "ri-chat-2-line",
     },
     {
-      text: "How does AI work in a technical capacity",
-      icon: "ri-sliders-line",
+      text: "Identify vendors with a strong track record of delivering projects on time and within budget",
+      icon: "ri-question-line",
     },
   ]);
   const [showChat, setShowChat] = useState(false);
@@ -33,12 +33,21 @@ export default function Welcome() {
   const navigate = useNavigate();
   const { chatHistory, setChatHistory,setNewChatHistory,setIsnewChat } = useContext(ChatContext);
 
-  const handleSend = async () => {
+  const handleSend = async ({prompt=""}) => {
     setGeneratingResponse(true);
     setShowChat(true);
-    if (!message.trim()) return;
+    let userText="";
+    if(prompt.length>0)
+    {
+      userText=prompt
+    }
+    else
+    {
+      if (!message.trim()) return;
 
-    const userText = message;
+     userText = message;
+    }
+    
 
     // Step 1: Add user's message with empty assistant field (awaiting response)
     setChat((prevChat) => [
@@ -70,7 +79,7 @@ export default function Welcome() {
         },
       ]);
       setIsnewChat(true);
-      setNewChatHistory([{User:message,Assistant:response.response,isTemporary:false,shouldAnimate:true,animationDone:false}]);
+      setNewChatHistory([{User:userText,Assistant:response.response,isTemporary:false,shouldAnimate:true,animationDone:false}]);
       navigate(`/chat/${response.session_id}`);
     }
 
@@ -92,9 +101,19 @@ export default function Welcome() {
     setGeneratingResponse(false);
   };
 
+
+  const handlePromptClick=async(promptText)=>{
+    handleSend({prompt:promptText});
+    
+  }
+
+
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
+
+
   return (
     <div className="md:static flex flex-col items-center justify-center md:h-full p-4 md:p-0 md:px-2 md:m-0 w-full gap-2">
       {!showChat && (
@@ -125,6 +144,8 @@ export default function Welcome() {
             <div
               key={index}
               className="bg-[#121212] text-white p-4 rounded-xl shadow-lg border border-gray-800 hover:border-cyan-500 cursor-pointer transition"
+              onClick={() => handlePromptClick(prompt.text)}
+            
             >
               <p className="text-sm mb-4 text-zinc-400">{prompt.text}</p>
               <i className={`${prompt.icon} text-xl text-gray-400`}></i>

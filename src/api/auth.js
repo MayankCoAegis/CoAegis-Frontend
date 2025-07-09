@@ -81,7 +81,7 @@ export const loginUser = async (username, password) => {
     formData.append("username", username);
     formData.append("password", password);
 
-    const response = await API2.post("/login", formData, {
+    const response = await API2.post("/login/", formData, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -114,7 +114,7 @@ export const refreshAccessToken = async () => {
     const formData = new URLSearchParams();
     formData.append("refresh_token", refresh_token);
 
-    const response = await API2.post("/token", formData, {
+    const response = await API2.post("/token/", formData, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -139,7 +139,7 @@ export const registerUser = async (form) => {
     formData.append("email", form.email);
     formData.append("contact", form.phone);
 
-    const response = await API2.post("/register", formData, {
+    const response = await API2.post("/register/", formData, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -168,7 +168,7 @@ export const registerUser = async (form) => {
 export const VerifyUser = async (token) => {
   try {
     
-    const response = await API.get(`/verify/${token}`);
+    const response = await API.get(`/verify/${token}/`);
     console.log("Response from Verification API:", response);
     if (response.data.message) {
       return {

@@ -230,7 +230,11 @@ function Chat() {
           <button
             onClick={handleSend}
             disabled={generatingResponse}
-            className="hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
+            className={
+              generatingResponse
+                ? "hidden md:block flex items-center gap-2 bg-gray-400  text-neutral-300 text-sm font-medium px-4 py-1.5 rounded-md transition"
+                : "hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
+            }
           >
             Send
           </button>
@@ -238,7 +242,7 @@ function Chat() {
           <button
             onClick={handleSend}
             disabled={generatingResponse}
-            className={generatingResponse?"md:hidden flex items-center gap-2 bg-gray-400  text-neutral-300 text-sm font-medium px-4 py-1.5 rounded-md transition":"md:hidden  flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"}
+            className={generatingResponse?"hidden":"md:hidden flex items-center gap-2 text-gray-200 text-sm font-medium p-2 px-1.5 rounded-full transition"}
           >
             <i className="ri-send-plane-fill text-lg"></i>
           </button>
@@ -257,7 +261,14 @@ function parseText(text) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-  // Bold headings
+  // Headings (from h1 to h4)
+  text = text
+    .replace(/^#### (.+)$/gm, "<h4>$1</h4>")
+    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+    .replace(/^# (.+)$/gm, "<h1>$1</h1>");
+
+  // Bold
   text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 
   // Links
@@ -266,19 +277,27 @@ function parseText(text) {
     '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
   );
 
-  // Code block
-  text = text.replace(
-    /```([\s\S]+?)```/g,
-    (_, code) => `<pre>${code.trim()}</pre>`
-  );
+  // Code blocks
+  text = text.replace(/```([\s\S]+?)```/g, (_, code) => `<pre>${code.trim()}</pre>`);
 
-  // Bullet points: * Item
-  text = text.replace(/(^|\n)\* (.+)/g, "$1<ul><li>$2</li></ul>");
-  text = text.replace(/<\/ul>\n<ul>/g, ""); // merge
+  // Handle bullet points (collect as a group)
+  text = text.replace(/(^|\n)- (.+)/g, (match, newline, content) => {
+    return `${newline}@@@BULLET@@@<li>${content}</li>`;
+  });
 
-  // Numbered lists: 1. Item
+  // Group bullets inside a single <ul>
+  text = text.replace(/(@@@BULLET@@@)+/g, (match) => {
+    const listItems = match
+      .split("@@@BULLET@@@")
+      .filter(Boolean)
+      .join("");
+    return `<ul>${listItems}</ul>`;
+  });
+
+  // Numbered list: convert to placeholder
   text = text.replace(/(^|\n)(\d+)\. (.+)/g, "$1@@@NUM@@@$3");
 
+  // Convert numbered list into <ol><li>...</li></ol>
   const lines = text.split("\n");
   let inOl = false;
   let output = "";
@@ -304,22 +323,25 @@ function parseText(text) {
 
   // Paragraphs
   text = text
-    .split("\n\n")
+    .split(/\n{2,}/) // split by double line breaks
     .map((para) => {
+      const trimmed = para.trim();
       if (
-        para.startsWith("<ul>") ||
-        para.startsWith("<ol>") ||
-        para.startsWith("<pre>") ||
-        para.includes("<li>")
+        trimmed.startsWith("<ul>") ||
+        trimmed.startsWith("<ol>") ||
+        trimmed.startsWith("<pre>") ||
+        trimmed.startsWith("<h") ||
+        trimmed.includes("<li>")
       ) {
-        return para;
+        return trimmed;
       }
-      return `<p>${para.trim()}</p>`;
+      return `<p>${trimmed}</p>`;
     })
     .join("");
 
   return { __html: text };
 }
+
 
 
 
@@ -352,6 +374,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
     content = (
       <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap">
         <TypeAnimation
+        splitter={(str) => str.split(/(?= )/)}
           sequence={[assistantMessage,() => {
             setChat((prevChat) => {
               const updated = [...prevChat];
@@ -363,7 +386,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
             });
           }]}
           cursor={false}
-          speed={100}
+          speed={99}
           repeat={0}
           
         />
