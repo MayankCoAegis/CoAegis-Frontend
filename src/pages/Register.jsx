@@ -154,7 +154,7 @@ function Register() {
             <>
               {/* Verification Section */}
               <div className="flex flex-col gap-4 justify-center flex-1 text-center">
-                <h2 className="text-xl font-semibold text-white">Check your inbox for email verification.</h2>
+                <h2 className="!text-md md:!text-lg font-medium !text-gray-200">Check your inbox for email verification.</h2>
                 {/* <p className="text-sm text-gray-400">
                   Enter the verification code we just sent to{" "}
                   <span className="text-cyan-400">{form.email}</span>.
