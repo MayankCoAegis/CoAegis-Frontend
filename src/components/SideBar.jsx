@@ -95,9 +95,9 @@ const Sidebar = ({
         </div>
 
         {/* Chat Sessions */}
-        <div className="flex-1 overflow-y-auto space-y-6 dark-scrollbar">
+            <p className="text-neutral-400 text-sm mb-[-15px]">Chats</p>
+        <div className="flex-1 overflow-y-auto space-y-6 dark-scrollbar py-4 ">
           <div>
-            <p className="text-neutral-400 text-sm mb-4">Chats</p>
             <div className="flex flex-col gap-4">
               {chatHistory && chatHistory.length > 0 && chatHistory.map((chat, index) => (
                 <NavLink

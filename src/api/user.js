@@ -77,13 +77,13 @@ export const getUser = async () => {
 
 export const NewPasswordAPI = async (token,newPassword) => {
   try {
-    const response = await API.post("/newpass",{
-      verification_token:token,
-      password:newPassword
-    });
+    const formData = new URLSearchParams();
+      formData.append("verification_token", token);
+      formData.append("password", newPassword);
+    const response = await API.post("/newpass/",formData);
 
     // Assuming backend returns access and refresh tokens
-    if (response.data.message) {
+    if (response.data) {
       return {
         success: true,
         message: "New Password Request Successfully",
@@ -94,6 +94,68 @@ export const NewPasswordAPI = async (token,newPassword) => {
       return {
         success:false,
         message:"New Password Request failed"
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: error?.response?.data?.detail || error.message,
+    };
+  }
+};
+
+
+export const changePasswordAPI = async (oldPassword,newPassword) => {
+  try {
+    const formData = new URLSearchParams();
+      formData.append("current_password", oldPassword);
+      formData.append("new_password", newPassword);
+    const response = await API.post("/resetpass/",formData);
+    // console.log("Response from changePasswordAPI:", response);
+
+    // Assuming backend returns access and refresh tokens
+    if (response.data) {
+      return {
+        success: true,
+        message: "Password Reset Successfully",
+      };
+    }
+    else
+    {
+      return {
+        success:false,
+        message:"New Password Request failed"
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: error?.response?.data?.detail || error.message,
+    };
+  }
+};
+
+export const forgotPasswordAPI = async (email) => {
+  try {
+    const formData = new URLSearchParams();
+      formData.append("email", email);
+    const response = await API2.post("/forgotpass/",formData);
+    console.log("Response from forgotPasswordAPI:", response);
+
+    // Assuming backend returns access and refresh tokens
+    if (response.data) {
+      return {
+        success: true,
+        message:response.data.message,
+      };
+    }
+    else
+    {
+      return {
+        success:false,
+        message:"Forgot Password Request failed"
       }
     }
   } catch (error) {

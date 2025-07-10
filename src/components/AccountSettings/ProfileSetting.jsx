@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+
 const ProfileSetting = () => {
     const [profile, setProfile] = useState({
         fullName: "John Doe",
@@ -12,6 +13,7 @@ const ProfileSetting = () => {
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
+  
 
   const handleReset = () => {
     setProfile({
