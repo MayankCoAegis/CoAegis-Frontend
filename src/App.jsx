@@ -12,6 +12,7 @@ import Welcome from './components/Welcome'
 import Chat from './components/Chat'
 import Verify from './pages/Verify'
 import NewPassword from './pages/NewPassword'
+import { HomePage } from './pages/HomePage'
 
 
 
@@ -23,7 +24,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         {/* Public Routes */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify" element={<Verify />} />
