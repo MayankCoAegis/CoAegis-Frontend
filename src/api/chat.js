@@ -149,10 +149,10 @@ console.log('url',`/user/chats/${id}/text`)
 
 export const DeleteChatById = async (id) => {
   try {
-    const response = await API.delete(`/user/chats/${id}/delete/`);
+    const response = await API.delete(`/user/chats/${id}/del/`);
 
-    
-    if (response.data.message=="Session deleted successfully.") {
+    // console.log("Response from DeleteChatById:", response);
+    if (response.status==204) {
       return {
         success: true,
         message: `Chat ${id} Deleted Successfully`,
@@ -174,3 +174,32 @@ export const DeleteChatById = async (id) => {
     };
   }
 };
+
+export const RenameChatById = async (id,rename) => {
+  try {
+    const response = await API.put(`/user/chats/${id}/rename/${rename}/`);
+
+    console.log("Response from RenameChatById:", response);
+    if (response.data) {
+      return {
+        success: true,
+        message: `Chat ${id} renamed Successfully`,
+        
+      };
+    }
+    else
+    {
+      return {
+        success:false,
+        message:`Chat ${id} rename failed`
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: error?.response?.data?.detail || error.message,
+    };
+  }
+};
+

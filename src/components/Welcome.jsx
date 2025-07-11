@@ -148,7 +148,7 @@ export default function Welcome() {
             
             >
               <p className="text-sm mb-4 text-zinc-400">{prompt.text}</p>
-              <i className={`${prompt.icon} text-xl text-gray-400`}></i>
+              {/* <i className={`${prompt.icon} text-xl text-gray-400`}></i> */}
             </div>
           ))}
         </div>
