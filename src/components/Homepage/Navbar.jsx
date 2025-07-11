@@ -238,6 +238,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
                 <motion.button
                   className="text-[#e5e7eb] hover:text-[#00b1cc] transition-colors duration-200 py-3 px-4 rounded-md font-medium hover:bg-gray-800 w-full text-left"
                   whileHover={{ x: 5 }}
+                  onClick={() => navigate('/login')}
                 >
                   Login
                 </motion.button>
@@ -247,6 +248,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
+                  onClick={() => navigate('/register')}
                 >
                   Join now
                 </motion.button>
