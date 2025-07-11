@@ -11,7 +11,7 @@ const Services = () => {
   return (
     <div ref={ref} className=" bg-[#0a0a0a] text-[#e5e7eb] py-20 px-4 w-full">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex row gap-12 items-center">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
 
              {/* Right Side - Content */}
           <motion.div
