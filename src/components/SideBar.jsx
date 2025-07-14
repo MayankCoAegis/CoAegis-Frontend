@@ -111,40 +111,7 @@ const Sidebar = ({
             <div className="  flex flex-col ">
               {chatHistory &&
                 chatHistory.length > 0 &&
-                chatHistory.map((chat, index) => (
-                  //               <div className="group flex flex-row hover:justify-between hover:cursor-pointer hover:items-center ">
-                  //               <NavLink
-                  //                 to={`/chat/${chat.id}`}
-                  //                 key={index}
-                  //                 className="group-hover:w-8/10 py-2 text-sm text-gray-200 truncate group-hover:text-cyan-300"
-                  //                 onClick={() => setisSideBarOpen(false)} // close on mobile tap
-                  //               >
-                  //                 {chat.title[0].toUpperCase()+chat.title.slice(1)}
-
-                  //               </NavLink>
-                  //               <i class="md:group-hover:block md:hidden ri-more-line text-2xl text-cyan-300 ">
-                  //                 {/* <div
-                  //   className={`absolute hidden space-y-1 top-9 right-0 w-[200px] h-auto rounded-lg border border-neutral-800 bg-neutral-800 z-10`}
-                  // >
-                  //               <div className="flex flex-col gap-1 md:gap-0 rounded-lg border border-neutral-800 bg-neutral-800 p-2 md:p-2 shadow-md/50">
-                  //                 <div className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md hover:bg-neutral-700">
-                  //                 <i className="ri-pencil-line text-gray-200"></i>
-                  //                 <span className="text-gray-200 text-sm font-medium">
-                  //                   Rename
-                  //                 </span>
-                  //               </div>
-                  //               <div className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md hover:bg-neutral-700">
-                  //                 <i className="ri-delete-bin-line text-red-400"></i>
-                  //                 <span className="text-red-400 text-sm font-medium">
-                  //                   Delete
-                  //                 </span>
-                  //               </div>
-                  //                 </div>
-                  //             </div> */}
-                  //               </i>
-                  //                {/* Hidden menu shown only on hover */}
-
-                  //               </div>
+                chatHistory.toReversed().map((chat, index) => (
                   <ChatTitleComponent
                     chat={chat}
                     index={index}
@@ -247,8 +214,6 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
     }
   };
 
-  
-
   return (
     <div
       className="group flex flex-row hover:cursor-pointer hover:items-center justify-between"
@@ -293,7 +258,9 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
           <div className="flex flex-col gap-1 md:gap-1 rounded-lg border border-neutral-800 bg-neutral-800 p-2 md:p-2 shadow-md/50 mt-10">
             <div
               className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md hover:bg-neutral-700"
-              onClick={() =>{  setIsRenaming(true)}}
+              onClick={() => {
+                setIsRenaming(true);
+              }}
             >
               <i className="ri-pencil-line text-gray-200 text-sm"></i>
               <span className="text-gray-200 text-xs md:text-sm font-medium font-[poppins]">

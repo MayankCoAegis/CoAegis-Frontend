@@ -5,7 +5,8 @@ import CoreValuesSection from "../components/Homepage/CoreValues";
 import Landing from "../components/Homepage/Landing";
 import Navbar from "../components/Homepage/Navbar";
 import Services from "../components/Homepage/Services";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import HomepagePass from "../components/HomePagePass";
 
 export const HomePage=()=> {
     const aboutRef = useRef(null);
@@ -13,7 +14,12 @@ export const HomePage=()=> {
   const contactRef = useRef(null);
   const coreValuesRef = useRef(null);
 
-    return <div className="flex flex-col items-center !bg-[#0a0a0a] h-screen w-full">
+  const [isOpen, setIsOpen] = useState(true);
+  const onClose = () => setIsOpen(false);
+
+    return <>
+      <HomepagePass isOpen={isOpen} onClose={onClose}/>
+     {!isOpen &&<div className="flex flex-col items-center !bg-[#0a0a0a] h-screen w-full">
         <Navbar onAboutClick={() => aboutRef.current?.scrollIntoView({ behavior: "smooth" })}
         onServicesClick={() => servicesRef.current?.scrollIntoView({ behavior: "smooth" })}
         onContactClick={() => contactRef.current?.scrollIntoView({ behavior: "smooth" })}
@@ -57,5 +63,6 @@ export const HomePage=()=> {
         </div>
       </footer>
 
-    </div>;
+    </div>}
+    </>
 }

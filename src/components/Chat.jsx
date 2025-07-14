@@ -129,6 +129,8 @@ function Chat() {
   };
 
   useEffect(() => {
+    if(generatingResponse)
+      return;
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
 
