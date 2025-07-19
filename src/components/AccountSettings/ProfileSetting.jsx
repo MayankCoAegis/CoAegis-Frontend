@@ -6,6 +6,7 @@ const ProfileSetting = () => {
         fullName: "John Doe",
         email: "john.doe@example.com",
         userId: "coaegis_user_12345",
+        phone:"1234567890"
     });
 
     const {user}=useAuth();
@@ -36,6 +37,7 @@ const ProfileSetting = () => {
             fullName: user?.username|| "null",
             email: user?.email ||"null",
             userId: user?.id|| "null",
+            phone: user?.contact||"null"
         })
     }
   },[])
@@ -53,18 +55,18 @@ const ProfileSetting = () => {
         </div>
 
         <div className="flex flex-col gap-2 border-b border-neutral-700 py-2">
-            <label className="text-sm font-semibold text-gray-200">UserId: </label>
-    <input name="fullName" type="text" className="text-sm text-gray-300 rounded-sm outline-none py-1"value={profile.userId}  onChange={handleChange}/>
+            <label className="text-sm font-semibold text-gray-200">Phone: </label>
+    <input name="fullName" type="text" className="text-sm text-gray-300 rounded-sm outline-none py-1"value={profile.phone}  onChange={handleChange}/>
         </div>
 
-     <div className="flex justify-end py-2">
+     {/* <div className="flex justify-end py-2">
             <button
            
             className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-4 py-2 rounded-md text-xs"
           >
             Edit Profile
           </button>
-          </div>
+          </div> */}
         
 
     

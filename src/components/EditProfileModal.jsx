@@ -8,6 +8,7 @@ import UsageSettings from "./AccountSettings/UsageSettings";
 export default function EditAddressModal({
   isOpen,
   onClose,
+  setChatHistory
 }) {
  
 
@@ -46,7 +47,7 @@ export default function EditAddressModal({
       case "Profile":
         return <ProfileSettings />;
       case "Account":
-        return <DangerSettings />;
+        return <DangerSettings setChatHistory={setChatHistory}/>;
       case "Preferences":
         return <PreferenceSettings />;
       case "Security":

@@ -203,3 +203,30 @@ export const RenameChatById = async (id,rename) => {
   }
 };
 
+export const DeleteAllChats = async () => {
+  try {
+    const response = await API.delete(`/user/chats/del/`);
+    console.log("Response from DeleteAllChats:", response);
+    if (response.status==204) {
+      return {
+        success: true,
+        message: `Chats deleted Successfully`,
+        
+      };
+    }
+    else
+    {
+      return {
+        success:false,
+        message:`Chats deletion failed`
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: error?.response?.data?.detail || error.message,
+    };
+  }
+};
+

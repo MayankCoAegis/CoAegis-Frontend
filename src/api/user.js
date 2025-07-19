@@ -50,7 +50,7 @@ API.interceptors.request.use(async (config) => {
 export const getUser = async () => {
   try {
     const response = await API.get("/user/");
-
+    console.log("Response from getUserAPI:", response);
     // Assuming backend returns access and refresh tokens
     if (response.data.id) {
       return {
@@ -156,6 +156,33 @@ export const forgotPasswordAPI = async (email) => {
       return {
         success:false,
         message:"Forgot Password Request failed"
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false,
+      message: error?.response?.data?.detail || error.message,
+    };
+  }
+};
+
+export const deleteUser = async () => {
+  try {
+    const response = await API.delete("/user/del/");
+    // console.log("Response from getUserAPI:", response);
+    // Assuming backend returns access and refresh tokens
+    if (response.status==204) {
+      return {
+        success: true,
+        message: "User deleted Successfully",
+      };
+    }
+    else
+    {
+      return {
+        success:false,
+        message:"User deletion failed"
       }
     }
   } catch (error) {

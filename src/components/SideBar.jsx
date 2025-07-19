@@ -63,7 +63,7 @@ const Sidebar = ({
         isOpen={isSearchModalOpen}
         onClose={handleSearchModalClose}
       />
-      <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} />
+      <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} setChatHistory={setChatHistory}/>
       {/* Sidebar */}
       <div
         className={`w-72 min-w-[250px] h-screen bg-neutral-950 text-white flex flex-col justify-between p-5 gap-8 fixed z-20 transition-transform duration-300 ${
@@ -128,14 +128,14 @@ const Sidebar = ({
           {/* <button className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300">
             <i className="ri-settings-3-line text-lg"></i> Settings
           </button> */}
-          <button
+          {/* <button
             className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
             onClick={() => {
               setisSideBarOpen(false);
             }}
           >
             <i className="ri-question-line text-lg"></i> Help Center
-          </button>
+          </button> */}
           {
             <button
               className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300"

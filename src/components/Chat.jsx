@@ -13,6 +13,7 @@ function Chat() {
   const [generatingResponse,setGeneratingResponse]=useState(false);
   const {newChatHistory, setNewChatHistory,IsnewChat, setIsnewChat}=useContext(ChatContext);
   const { chatId } = useParams();
+  const [initialScroll, setInitialScroll] = useState(true);
 
   // Filter chat data based on chatId from URL params
   useEffect(() => {
@@ -101,9 +102,13 @@ function Chat() {
     // Clear input
     setMessage("");
 
-    setTimeout(() => {
-      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, 100);
+    // setTimeout(() => {
+    //   bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    // }, 100);
+
+    // const triggerScroll = () => {
+    //   bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    // };
 
     // Step 2: Simulate API response
     const response = await getChatResponse(chatId, userText);
@@ -131,8 +136,17 @@ function Chat() {
   useEffect(() => {
     if(generatingResponse)
       return;
+    if(initialScroll==false)
+      return
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    setInitialScroll(false);
   }, [chat]);
+
+  useEffect(() => {
+  setInitialScroll(true);
+  }, []);
+
+  
 
   return (
     <div className="flex flex-col h-full overflow-hidden items-center md:pt-6 ">

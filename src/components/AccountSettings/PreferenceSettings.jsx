@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useTheme } from "../../contexts/ThemeContext";
 
 export default function PreferenceSettings(){
     const [settings, setSettings] = useState({
@@ -8,6 +8,8 @@ export default function PreferenceSettings(){
     emailNotifications: false,
     advancedMode: false,
   });
+
+  const {useTheme}=useTheme();
 
   const handleToggle = (key) => {
     const newSettings = {
@@ -21,6 +23,10 @@ export default function PreferenceSettings(){
   // Placeholder for future API integration
   const handleApiUpdate = (key, value) => {
     console.log(`Setting "${key}" updated to`, value);
+    if(key=="darkMode")
+      {
+
+      };
     // TODO: Implement API call here
   };
 
@@ -31,12 +37,12 @@ export default function PreferenceSettings(){
       description: "Use dark theme across the application",
       icon: "🌙",
     },
-    {
-      key: "autoSaveChats",
-      title: "Auto-save Chats",
-      description: "Automatically save chat history",
-      icon: "💾",
-    },
+    // {
+    //   key: "autoSaveChats",
+    //   title: "Auto-save Chats",
+    //   description: "Automatically save chat history",
+    //   icon: "💾",
+    // },
     {
       key: "emailNotifications",
       title: "Email Notifications",

@@ -13,6 +13,7 @@ import Chat from './components/Chat'
 import Verify from './pages/Verify'
 import NewPassword from './pages/NewPassword'
 import { HomePage } from './pages/HomePage'
+import {ThemeProvider} from './contexts/ThemeContext'
 
 
 
@@ -20,6 +21,7 @@ import { HomePage } from './pages/HomePage'
 function App() {
 
   return (
+    <ThemeProvider>
     <AuthProvider>
       <BrowserRouter>
       <Routes>
@@ -47,6 +49,7 @@ function App() {
       </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   )
 }
 
