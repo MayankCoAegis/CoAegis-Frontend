@@ -1,18 +1,26 @@
-import { createContext, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 
-const ThemeContext=createContext();
+const ThemeContext = createContext();
 
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme;
+    }
+    else{
+      return 'dark';
+    }
+    // Default to system preference if no theme is saved
+    // return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
 
-export default ThemeProvider=({children})=>{
-const [theme,setTheme]=useState(()=>{
-    const savedTheme=localStorage.getItem("theme");
-    return savedTheme||"dark";
-});
-
-// Effect to apply the theme class to the <html> element and save to localStorage
+  // Effect to apply the theme class and save to localStorage
   useEffect(() => {
     const root = window.document.documentElement;
+    // Remove the opposite theme class
     root.classList.remove(theme === 'dark' ? 'light' : 'dark');
+    // Add the current theme class
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
@@ -27,9 +35,7 @@ const [theme,setTheme]=useState(()=>{
       {children}
     </ThemeContext.Provider>
   );
+};
 
-
-}
-
-// 3. Create a custom hook to use the context easily
+// Custom hook to use the context easily
 export const useTheme = () => useContext(ThemeContext);
