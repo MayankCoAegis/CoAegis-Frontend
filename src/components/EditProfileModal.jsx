@@ -67,14 +67,14 @@ export default function EditAddressModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs">
-      <div className="mx-4 min-h-7/10 max-h-9/10 md:w-[650px] md:h-3/4 bg-[#2f2f2f] rounded-lg shadow-lg flex flex-col md:flex-row overflow-y-auto dark-scrollbar">
+      <div className="mx-4 min-h-7/10 max-h-9/10 md:w-[650px] md:h-3/4 dark:bg-[#2f2f2f] bg-[#ffffff] rounded-lg shadow-lg flex flex-col md:flex-row overflow-y-auto dark-scrollbar">
 
         {/* Left Div Menu */}
-        <div className="md:w-[180px] bg-[#2a2a2a] rounded-t-lg md:rounded-l-lg p-2">
+        <div className="md:w-[180px] dark:bg-[#2a2a2a] bg-[#f0f4f9] rounded-t-lg md:rounded-l-lg p-2">
              {/* Close Button */}
       <button
         onClick={onClose}
-        className="text-white text-xl md:mb-4 self-start md:block cursor-pointer"
+        className="dark:text-white text-gray-800 text-xl md:mb-4 self-start md:block cursor-pointer"
       >
         <i className="ri-close-line"></i>
       </button>
@@ -85,14 +85,14 @@ export default function EditAddressModal({
           <li key={option.key}>
             <button
               onClick={() => setActiveTab(option.label)}
-              className={`flex items-center w-full px-2 py-1 md:px-3 md:py-2 rounded-lg transition-colors cursor-pointer hover:bg-[#333] ${
+              className={`flex items-center w-full px-2 py-1 md:px-3 md:py-2 rounded-lg transition-colors cursor-pointer ${
                 activeTab === option.label
-                  ? "bg-[#333] text-white"
-                  : "text-gray-300 hover:bg-[#2a2a2a]"
+                  ? "dark:bg-[#333] bg-[#d3e3fd] !text-[#1b54a6]"
+                  : "dark:hover:bg-[#333] hover:bg-gray-300"
               }`}
             >
-              <i className={`${option.icon} text-lg mr-3`}></i>
-              <span className="text-sm font-medium text-gray-200">{option.label}</span>
+              <i className={`${option.icon} dark:text-gray-300 text-gray-700 text-lg mr-3`}></i>
+              <span className="text-sm font-medium dark:text-gray-300 text-gray-700">{option.label}</span>
             </button>
           </li>
         ))}
@@ -103,7 +103,7 @@ export default function EditAddressModal({
         </div>
     {/* Right Div */}
       <div className="flex-1  md:p-3 overflow-y-auto">
-        <h2 className="hidden md:block text-lg text-gray-200 border-b border-neutral-600 p-2 pt-0">
+        <h2 className="hidden md:block text-lg dark:text-gray-200 text-gray-700 font-medium border-b border-neutral-600 p-2 pt-0">
             {activeTab}
         </h2>
         {renderContent()}

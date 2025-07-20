@@ -60,43 +60,43 @@ const SecuritySettings = () => {
      
 
       <div className="mb-4">
-        <label className="block text-sm text-gray-200 mb-1">Current Password:</label>
-        <div className="text-gray-100 text-xs md:text-sm bg-[#1f1f1f] border border-[#3a3a3a] rounded-md px-4 py-2">
+        <label className="block text-sm dark:text-gray-200 text-gray-700 mb-1">Current Password:</label>
+        <div className="text-xs md:text-sm dark:bg-[#1f1f1f] bg-gray-100 border dark:border-[#3a3a3a] border-gray-100 rounded-md px-4 py-2">
           <input
             type="password"
             name="current"
             value={passwords.current}
             onChange={handleChange}
             placeholder="Enter current password"
-            className="bg-transparent w-full outline-none text-gray-200"
+            className="bg-transparent w-full outline-none dark:text-gray-200 text-gray-700"
           />
         </div>
       </div>
 
       <div className="mb-4">
-        <label className="block text-sm text-gray-200 mb-1">New Password:</label>
-        <div className="text-gray-100  text-xs md:text-sm bg-[#1f1f1f] border border-[#3a3a3a] rounded-md px-4 py-2">
+        <label className="block text-sm dark:text-gray-200 text-gray-700 mb-1">New Password:</label>
+        <div className="text-xs md:text-sm dark:bg-[#1f1f1f] bg-gray-100 border dark:border-[#3a3a3a] border-gray-100 rounded-md px-4 py-2">
           <input
             type="password"
             name="new"
             value={passwords.new}
             onChange={handleChange}
             placeholder="Enter new password"
-            className="bg-transparent  w-full outline-none text-gray-200"
+            className="bg-transparent  w-full outline-none dark:text-gray-200 text-gray-700"
           />
         </div>
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm text-gray-200 mb-1">Confirm New Password:</label>
-        <div className="text-gray-100  text-xs md:text-sm  bg-[#1f1f1f] border border-[#3a3a3a] rounded-md px-4 py-2">
+        <label className="block text-sm dark:text-gray-200 text-gray-700 mb-1">Confirm New Password:</label>
+        <div className="text-xs md:text-sm  dark:bg-[#1f1f1f] bg-gray-100 border dark:border-[#3a3a3a] border-gray-100 rounded-md px-4 py-2">
           <input
             type="password"
             name="confirm"
             value={passwords.confirm}
             onChange={handleChange}
             placeholder="Confirm new password"
-            className="bg-transparent w-full outline-none text-white"
+            className="bg-transparent w-full outline-none dark:text-gray-200 text-gray-700"
           />
         </div>
       </div>
@@ -111,7 +111,7 @@ const SecuritySettings = () => {
 
         <button
           onClick={handleChangePassword}
-          className="bg-cyan-500 hover:bg-cyan-600 text-gray-200 px-5 py-2 rounded-md text-xs"
+          className="dark:bg-cyan-500 bg-cyan-400 dark:hover:bg-cyan-600 hover:bg-cyan-500 dark:text-gray-200 text-gray-50 px-5 py-2 rounded-md text-xs"
         >
         Change Password
         </button>

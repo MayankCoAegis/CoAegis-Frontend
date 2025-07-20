@@ -45,18 +45,18 @@ const ProfileSetting = () => {
   return (
     <div className="flex flex-col gap-3 p-6">
         <div className="flex flex-col gap-2 border-b border-neutral-700 py-2">
-            <label className="text-sm font-semibold text-gray-200">Full Name: </label>
-    <input name="fullName" type="text" className="text-sm text-gray-300  rounded-sm outline-none py-1"value={profile.fullName}  onChange={handleChange} disabled/>
+            <label className="text-sm font-semibold dark:text-gray-200 text-gray-700">Full Name: </label>
+    <input name="fullName" type="text" className="text-sm dark:text-gray-300 text-gray-800  rounded-sm outline-none py-1"value={profile.fullName}  onChange={handleChange} disabled/>
         </div>
 
         <div className="flex flex-col gap-2 border-b border-neutral-700 py-2">
-            <label className="text-sm font-semibold text-gray-200">Email: </label>
-    <input name="fullName" type="text" className="text-sm text-gray-300 rounded-sm outline-none py-1 "value={profile.email}  onChange={handleChange}/>
+            <label className="text-sm font-semibold dark:text-gray-200 text-gray-700">Email: </label>
+    <input name="fullName" type="text" className="text-sm dark:text-gray-300 text-gray-800 rounded-sm outline-none py-1 "value={profile.email}  onChange={handleChange}/>
         </div>
 
         <div className="flex flex-col gap-2 border-b border-neutral-700 py-2">
-            <label className="text-sm font-semibold text-gray-200">Phone: </label>
-    <input name="fullName" type="text" className="text-sm text-gray-300 rounded-sm outline-none py-1"value={profile.phone}  onChange={handleChange}/>
+            <label className="text-sm font-semibold dark:text-gray-200 text-gray-700">Phone: </label>
+    <input name="fullName" type="text" className="text-sm dark:text-gray-300 text-gray-800 rounded-sm outline-none py-1"value={profile.phone}  onChange={handleChange}/>
         </div>
 
      {/* <div className="flex justify-end py-2">

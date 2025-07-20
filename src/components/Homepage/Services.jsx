@@ -9,7 +9,7 @@ const Services = () => {
   const navigate = useNavigate();
 
   return (
-    <div ref={ref} className=" bg-[#0a0a0a] text-[#e5e7eb] py-20 px-4 w-full">
+    <div ref={ref} className=" dark:bg-[#0a0a0a] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700 py-20 px-4 w-full">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row gap-12 items-center">
 
@@ -42,11 +42,11 @@ const Services = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="space-y-6"
             >
-              <p className="text-sm md:text-md leading-relaxed text-[#e5e7eb]/90">
+              <p className="text-sm md:text-md leading-relaxed dark:text-[#e5e7eb]/90 text-gray-800/90">
                 We offer an intelligent, user-friendly AI assistant that provides instant answers and thoughtful guidance across a wide range of topics. Whether you're looking for help with academic questions, professional tasks, or everyday inquiries, our AI is designed to adapt to your needs with precision and speed. With expertise spanning multiple domains—from technology and science to language, finance, and more.
               </p>
 
-              <p className="text-sm md:text-md leading-relaxed text-[#e5e7eb]/90">
+              <p className="text-sm md:text-md leading-relaxed dark:text-[#e5e7eb]/90 text-gray-800/90">
                 Our platform ensures you get accurate, context-aware responses anytime. Backed by cutting-edge machine learning models that continuously improve, our AI offers a smarter, more reliable experience every time you interact.
               </p>
             </motion.div>
@@ -89,7 +89,7 @@ const Services = () => {
               
               {/* Main illustration container */}
                {/* Main illustration container */}
-              <div className="hidden md:block relative bg-[#1a1a1a] rounded-2xl p-8 shadow-2xl border border-gray-800">
+              <div className="hidden md:block relative dark:bg-[#1a1a1a] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700 rounded-2xl p-8 shadow-2xl border dark:border-gray-800 border-gray-200">
                 <div className="md:w-80 md:h-80 bg-gradient-to-br from-[#00b1cc]/20 to-[#00b1cc]/5 rounded-xl flex flex-col items-center justify-center space-y-4">
                   
                   {/* AI Chat Interface */}
@@ -109,7 +109,7 @@ const Services = () => {
                     </div>
                     
                     {/* Chat Messages */}
-                    <div className="bg-[#2a2a2a] p-4 space-y-3 min-h-[200px] rounded-b-lg">
+                    <div className="dark:bg-[#2a2a2a] bg-[#ffffff] p-4 space-y-3 min-h-[200px] rounded-b-lg">
                       {/* User Message */}
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}

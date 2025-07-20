@@ -6,6 +6,7 @@ import EditAddressModal from "./EditProfileModal";
 import { useLoader } from "../contexts/LoaderContext";
 import SearchModal from "./SearchModal";
 import { DeleteChatById, RenameChatById } from "../api/chat";
+import ThemeToggler from "./ThemeToggler";
 
 const Sidebar = ({
   isSideBarOpen,
@@ -66,7 +67,7 @@ const Sidebar = ({
       <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} setChatHistory={setChatHistory}/>
       {/* Sidebar */}
       <div
-        className={`w-72 min-w-[250px] h-screen bg-neutral-950 text-white flex flex-col justify-between p-5 gap-8 fixed z-20 transition-transform duration-300 ${
+        className={`w-72 min-w-[250px] h-screen dark:bg-neutral-950 bg-[#f0f4f9] text-white flex flex-col justify-between p-5 gap-8 fixed z-20 transition-transform duration-300 ${
           isSideBarOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:flex`}
       >
@@ -82,12 +83,13 @@ const Sidebar = ({
             className="ri-close-line text-lg md:hidden"
             onClick={() => setisSideBarOpen(!isSideBarOpen)}
           ></i>
+          <ThemeToggler />
         </div>
 
         {/* SubMenu */}
         <div className="flex flex-col gap-1">
           <button
-            className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300"
+            className="flex items-center gap-2 text-sm dark:text-gray-200 text-gray-600 hover:text-cyan-300"
             onClick={() => {
               setisSideBarOpen(false), navigate("/chat");
             }}
@@ -95,7 +97,7 @@ const Sidebar = ({
             <i className="ri-chat-ai-line text-lg"></i> New Chat
           </button>
           <button
-            className="flex items-center gap-2 text-sm text-gray-200 hover:text-cyan-300"
+            className="flex items-center gap-2 text-sm dark:text-gray-200 text-gray-600 hover:text-cyan-300"
             onClick={() => {
               setisSideBarOpen(false), setIsSearchModalOpen(true);
             }}
@@ -105,8 +107,8 @@ const Sidebar = ({
         </div>
 
         {/* Chat Sessions */}
-        <p className="text-neutral-400 text-sm mb-[-15px]">Chats</p>
-        <div className="flex-1 overflow-y-auto space-y-6 dark-scrollbar py-4 pr-4">
+        <p className="dark:text-neutral-400 text-neutral-600 font-medium text-sm mb-[-15px]">Chats</p>
+        <div className="flex-1 overflow-y-auto space-y-6 dark:dark-scrollbar light-scrollbar py-4 pr-4">
           <div>
             <div className="  flex flex-col ">
               {chatHistory &&
@@ -138,7 +140,7 @@ const Sidebar = ({
           </button> */}
           {
             <button
-              className="flex items-center text-gray-200 gap-2 text-sm  hover:text-cyan-300"
+              className="flex items-center dark:text-gray-200 text-gray-600 gap-2 text-sm  hover:text-cyan-300"
               onClick={() => {
                 handleAccount();
               }}
@@ -150,14 +152,14 @@ const Sidebar = ({
           {user ? (
             <button
               onClick={() => handleLogout()}
-              className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
+              className="flex items-center dark:text-gray-200 text-gray-600 gap-2 text-sm hover:text-cyan-300"
             >
               <i className="ri-login-box-line text-lg"></i> Log Out
             </button>
           ) : (
             <button
               onClick={() => navigate("/login")}
-              className="flex items-center text-gray-200 gap-2 text-sm hover:text-cyan-300"
+              className="flex items-center dark:text-gray-200 text-gray-600 gap-2 text-sm hover:text-cyan-300"
             >
               <i className="ri-login-box-line text-lg"></i> Log In
             </button>
@@ -223,7 +225,7 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
         <NavLink
           to={`/chat/${chat.id}`}
           key={index}
-          className="group-hover:w-8/10 w-8/10 md:w-full py-2 text-sm text-gray-200 truncate group-hover:text-cyan-300"
+          className="group-hover:w-8/10 w-8/10 md:w-full py-2 text-sm dark:text-gray-200 text-gray-800 truncate dark:group-hover:text-cyan-300 group-hover:text-cyan-300"
           onClick={() => setisSideBarOpen(false)} // close on mobile tap
         >
           {chat.title[0].toUpperCase() + chat.title.slice(1)}
@@ -234,7 +236,7 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
           autoFocus
           ref={inputRef}
           type="text"
-          className="w-8/10 md:w-full py-2 text-sm text-gray-200 truncate group-hover:text-cyan-300 bg-neutral-800 px-2 rounded-md outline-none"
+          className="w-8/10 md:w-full py-2 text-sm dark:text-gray-200 text-gray-800 truncate group-hover:text-cyan-300 dark:bg-neutral-800 bg-gray-200 px-2 rounded-md outline-none"
           defaultValue={chat.title}
           onChange={(e) => setRename(e.target.value)}
           onKeyDown={(e) => {
@@ -246,7 +248,7 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
         />
       )}
       <i
-        className="relative md:group-hover:block md:hidden ri-more-line text-2xl md:text-cyan-300 "
+        className="relative md:group-hover:block md:hidden ri-more-line text-2xl dark:md:text-cyan-300 md:text-cyan-300"
         onClick={() => setIsOptionOpen(!isOptionOpen)}
       >
         <div
@@ -255,24 +257,24 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
           } space-y-1 top-0 right-0 w-[140px] h-auto  z-10`}
           onMouseLeave={() => setIsOptionOpen(false)}
         >
-          <div className="flex flex-col gap-1 md:gap-1 rounded-lg border border-neutral-800 bg-neutral-800 p-2 md:p-2 shadow-md/50 mt-10">
+          <div className="flex flex-col gap-1 md:gap-1 rounded-lg border dark:border-neutral-800 border-gray-100 dark:bg-neutral-800 bg-gray-50 p-2 md:p-2 dark:shadow-md/50  shadow-md/10 mt-10">
             <div
-              className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md hover:bg-neutral-700"
+              className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md dark:hover:bg-neutral-700 hover:bg-neutral-200 "
               onClick={() => {
                 setIsRenaming(true);
               }}
             >
-              <i className="ri-pencil-line text-gray-200 text-sm"></i>
-              <span className="text-gray-200 text-xs md:text-sm font-medium font-[poppins]">
+              <i className="ri-pencil-line dark:text-gray-200 text-gray-700 text-sm"></i>
+              <span className="dark:text-gray-200 text-gray-700 text-xs md:text-sm font-medium font-[poppins]">
                 Rename
               </span>
             </div>
             <div
-              className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md hover:bg-neutral-700 "
+              className="flex flex-row items-center gap-3 p-1 md:p-2 rounded-md dark:hover:bg-neutral-700 hover:bg-neutral-200 "
               onClick={() => handleDelete(chat.id)}
             >
-              <i className="ri-delete-bin-line text-red-400 text-sm"></i>
-              <span className="text-red-400 text-xs md:text-sm font-medium font-[poppins]">
+              <i className="ri-delete-bin-line dark:text-red-400 text-red-500 text-sm"></i>
+              <span className="dark:text-red-400 text-red-500 text-xs md:text-sm font-medium font-[poppins]">
                 Delete
               </span>
             </div>

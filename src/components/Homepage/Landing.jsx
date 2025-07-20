@@ -56,11 +56,8 @@ const Landing = () => {
 
   return (
     <div
-      className="min-h-screen relative overflow-hidden w-full"
-      style={{
-        background:
-          "linear-gradient(to bottom right, #0a0a0a, #0a0a0a, #0a0a0a)",
-      }}
+      className="min-h-screen relative overflow-hidden w-full dark:bg-[#0a0a0a] bg-[#ffffff]"
+      
     >
       {/* Animated Background Elements */}
       <motion.div
@@ -146,7 +143,7 @@ const Landing = () => {
           className="text-4xl md:text-6xl font-semibold mb-6 max-w-5xl"
           variants={itemVariants}
         >
-          <span className="text-white">Intelligent </span>
+          <span className="dark:text-white text-gray-700">Intelligent </span>
           <span
             className="text-transparent bg-clip-text"
             style={{
@@ -156,12 +153,12 @@ const Landing = () => {
             chat assistance
           </span>
           <br />
-          <span className="text-white">for your business</span>
+          <span className="dark:text-white text-gray-700">for your business</span>
         </motion.h1>
 
         {/* Description */}
         <motion.p
-          className="text-gray-300 text-sm md:text-md mb-12 max-w-2xl leading-relaxed"
+          className="dark:text-gray-300 text-gray-800 text-sm md:text-md mb-12 max-w-2xl leading-relaxed"
           variants={itemVariants}
         >
           Explore limitless knowledge through intelligent chat. From simple

@@ -151,9 +151,9 @@ function Chat() {
   return (
     <div className="flex flex-col h-full overflow-hidden items-center md:pt-6 ">
       {/* Chat messages area */}
-      <div className="flex-1 overflow-y-auto px-[6%] md:px-[13%] py-6 w-full space-y-4 md:space-y-6 dark-scrollbar flex flex-col">
+      <div className="flex-1 overflow-y-auto px-[6%] md:px-[13%] py-6 w-full space-y-4 md:space-y-6 dark:dark-scrollbar light-scrollbar flex flex-col">
         {chat && chat.length == 0 && (
-          <div className="text-center text-gray-400 text-sm">
+          <div className="text-center dark:text-gray-400 text-gray-700 text-sm">
             Start the conversation...
           </div>
         )}
@@ -225,22 +225,22 @@ function Chat() {
       </div>
 
       {/* Mobile helper space */}
-      <div className="md:hidden bg-neutral-900 fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
+      <div className="md:hidden dark:bg-neutral-900 bg-[#ffffff] fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
 
       {/* Input Box */}
-      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static bg-[#0e0e0e] rounded-xl md:p-4 md:w-3/4  mx-auto shadow-lg border border-gray-800  ">
+      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static dark:bg-[#0e0e0e] bg-[#ffffff] rounded-xl md:p-4 md:w-3/4  mx-auto shadow-lg border dark:border-gray-800 border-gray-200 ">
         <textarea
           rows={1}
           placeholder="Ask Anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full bg-transparent resize-none text-gray-200 placeholder-zinc-500 outline-none p-2 text-sm"
+          className="w-full bg-transparent resize-none dark:text-gray-200 text-gray-700 placeholder-zinc-500 outline-none p-2 text-sm"
         ></textarea>
 
         <div className="flex justify-between mt-2 items-center">
-          <div className="flex flex-1 items-center justify-start gap-4 text-white text-lg md:p-2">
-            {/* <i className="ri-add-line cursor-pointer hover:text-cyan-400 transition"></i> */}
-            <i className="ri-mic-line cursor-pointer hover:text-cyan-400 transition"></i>
+          <div className="flex flex-1 items-center justify-start gap-4 dark:text-white text-gray-700 text-lg md:p-2">
+            <i className="ri-add-line cursor-pointer hover:text-cyan-400 transition"></i>
+            {/* <i className="ri-mic-line cursor-pointer hover:text-cyan-400 transition"></i> */}
           </div>
 
           <button
@@ -286,6 +286,9 @@ function parseText(text) {
 
   // Bold
   text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+  // Italics
+text = text.replace(/\*(?!\*)(.+?)\*/g, "<em>$1</em>");
 
   // Links
   text = text.replace(
@@ -382,13 +385,13 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
         repeat={Infinity}
         cursor={false}
         speed={50}
-        className="items-center p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+        className="items-center p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide dark:text-gray-200 text-gray-800 self-start mr-auto assistant-response flex-wrap"
       />
     );
   } else if (msgObject.shouldAnimate && !msgObject.animationDone) {
     // Animate final assistant message
     content = (
-      <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap">
+      <div className="p-2 px-3 md:px-4 md:py-3 rounded-lg text-xs/6 md:text-sm/7 tracking-wide dark:text-gray-200 text-gray-700 self-start mr-auto assistant-response flex-wrap">
         <TypeAnimation
         splitter={(str) => str.split(/(?= )/)}
           sequence={[assistantMessage,() => {
@@ -412,7 +415,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
     // Show parsed message (bold, code, etc.) after animation is done or on reload
     content = (
       <div
-        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide text-gray-200 self-start mr-auto assistant-response flex-wrap"
+        className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide dark:text-gray-200 text-gray-800 self-start mr-auto assistant-response flex-wrap"
         dangerouslySetInnerHTML={parseText(assistantMessage)}
       />
     );
@@ -420,7 +423,7 @@ function ChatMessage({ msgObject, index, chat, setChat }) {
 
   return <div key={index}>
       {msgObject.User && (
-                  <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide bg-neutral-800 text-gray-200 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
+                  <div className="p-2 px-3 md:px-4 md:py-2 rounded-lg text-xs/5 md:text-sm/6 tracking-wide dark:bg-neutral-800 bg-gray-200 dark:text-gray-200 text-gray-800 self-end ml-auto w-fit max-w-[80%] md:max-w-[50%]">
                     {msgObject.User}
                   </div>
                 )}

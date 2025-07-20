@@ -47,7 +47,7 @@ const containerVariants = {
 export default function ContactUs() {
   return (
     <motion.section
-      className="bg-[#0a0a0a] text-[#e5e7eb] py-20 px-6 w-full" 
+      className="dark:bg-[#0a0a0a] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700 py-20 px-6 w-full" 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -74,7 +74,7 @@ export default function ContactUs() {
               className={`rounded-lg p-8 flex flex-col items-center text-center shadow-lg transition-colors duration-300 ${
                 value.highlighted
                   ? "bg-[#00b1cc] text-white"
-                  : "bg-[#1f1f1f]"
+                  : "dark:bg-[#1f1f1f] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700"
               }`}
             >
               <div className={`mb-4 w-16 h-16 flex items-center justify-center rounded-full ${value.highlighted ? "bg-white !text-[#00b1cc]" : "bg-[#00b1cc]"}`}>
@@ -82,7 +82,7 @@ export default function ContactUs() {
               </div>
               <h3 className="text-md md:text-xl font-semibold mb-6">{value.title}</h3>
               {value.description.map((desc, index) => (
-                  <p className="text-sm leading-relaxed text-[#e5e7eb] mb-1" key={index}>
+                  <p className="text-sm leading-relaxed mb-1" key={index}>
                 {desc}
               </p>
               ))}

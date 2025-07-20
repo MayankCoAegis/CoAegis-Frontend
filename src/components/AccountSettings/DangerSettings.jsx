@@ -48,8 +48,8 @@ export default function DangerSettings({setChatHistory}){
   {/* <!-- Delete Chat History --> */}
   <div className="flex flex-col md:flex-row gap-4 md:gap-2 md:items-center justify-between">
     <div className="md:w-3/5">
-    <p className="!text-red-300 !text-sm !font-semibold">Delete All Chat History</p>
-    <p className="!text-gray-300 !text-xs">Permanently delete all your chat conversations</p>
+    <p className="dark:!text-red-300 text-red-500 !text-sm !font-semibold">Delete All Chat History</p>
+    <p className="dark:!text-gray-300 text-gray-700 !text-xs">Permanently delete all your chat conversations</p>
     </div>
     <div>
     <button
@@ -65,8 +65,8 @@ export default function DangerSettings({setChatHistory}){
   {/* <!-- Delete Account --> */}
   <div className="flex flex-col md:flex-row gap-4 md:gap-2 md:items-center justify-between">
     <div className="md:w-3/5">
-    <p className="text-red-300 !text-sm font-semibold">Delete Account</p>
-    <p className="text-gray-300 !text-xs">Permanently delete your CoAegis account</p>
+    <p className="dark:!text-red-300 text-red-500 !text-sm font-semibold">Delete Account</p>
+    <p className="dark:!text-gray-300 text-gray-700 !text-xs">Permanently delete your CoAegis account</p>
     </div>
     <div>
     <button

@@ -9,7 +9,7 @@ const AboutUs = () => {
 
   const navigate=useNavigate();
   return (
-    <div ref={ref} className=" bg-[#0a0a0a] text-[#e5e7eb] py-20 px-4 w-full">
+    <div ref={ref} className=" dark:bg-[#0a0a0a] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700 py-20 px-4 w-full">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Side - AI Chat Illustration */}
@@ -34,7 +34,7 @@ const AboutUs = () => {
               
               {/* Main illustration container */}
               
-                <div className="relative  bg-[url('/aboutUs.png')] bg-cover bg-center w-[90vw] h-[250px] md:w-[500px] md:h-[500px] rounded-2xl p-8 shadow-2xl">
+                <div className="relative  bg-[url('/aboutUs.png')] bg-cover bg-center w-[90vw] h-[250px] md:w-[500px] md:h-[500px] rounded-2xl p-8 dark:shadow-2xl">
                     
                 </div>
              
@@ -71,11 +71,11 @@ const AboutUs = () => {
               transition={{ duration: 0.6, delay: 0.6 }}
               className="space-y-6"
             >
-              <p className="text-sm md:text-md leading-relaxed text-[#e5e7eb]/90 ">
+              <p className="text-sm md:text-md leading-relaxed dark:text-[#e5e7eb]/90 text-gray-800/90">
                 At CoAegis, we believe that access to knowledge should be effortless, engaging, and empowering. That’s why we’ve built an AI-driven platform that enables users to ask, learn, and grow—whether they’re students, professionals, or lifelong learners. Our AI assistant is designed to provide accurate, context-aware answers across a wide range of topics, helping users make informed decisions, solve problems, and spark creativity.
               </p>
 
-              <p className="text-sm md:text-md leading-relaxed text-[#e5e7eb]/90">
+              <p className="text-sm md:text-md leading-relaxed dark:text-[#e5e7eb]/90 text-gray-800/90">
                 By bridging the gap between human intelligence and machine learning, we aim to transform the way people connect with information—making it faster, smarter, and more personalized than ever before.
               </p>
             </motion.div>

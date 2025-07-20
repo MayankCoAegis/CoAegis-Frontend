@@ -120,16 +120,16 @@ export default function Welcome() {
         <div className="text-center px-4">
           {/* Logo */}
           <div className="flex justify-center mb-4">
-            <i class="ri-wechat-channels-line text-4xl text-white"></i>
+            <i class="ri-wechat-channels-line text-4xl dark:text-white text-cyan-400"></i>
           </div>
 
           {/* Heading */}
-          <h1 className="text-white text-xl md:text-3xl font-medium text-shadow-lg">
-            Welcome to <span className="text-cyan-500">CoAegis</span>
+          <h1 className="dark:text-white text-gray-600 text-xl md:text-3xl font-medium dark:text-shadow-lg">
+            Welcome to <span className="dark:text-cyan-500 text-cyan-400">CoAegis</span>
           </h1>
 
           {/* Subtext */}
-          <p className="text-zinc-500 mt-2 text-sm md:max-w-xl mx-auto">
+          <p className="dark:text-zinc-500 text-gray-600 mt-2 text-sm md:max-w-xl mx-auto">
             Introducing CoAegis — an advanced AI built to challenge assumptions,
             generate fearless ideas, and help you think beyond the obvious.Fast.
             Bold. Unfiltered.
@@ -143,11 +143,11 @@ export default function Welcome() {
           {prompts.map((prompt, index) => (
             <div
               key={index}
-              className="bg-[#121212] text-white p-4 rounded-xl shadow-lg border border-gray-800 hover:border-cyan-500 cursor-pointer transition"
+              className="dark:bg-[#121212] bg-[#f0f4f9] text-white p-4 rounded-xl shadow-lg border dark:border-gray-800 border-gray-200 dark:hover:border-cyan-500 hover:border-cyan-400  cursor-pointer transition hover:scale-105"
               onClick={() => handlePromptClick(prompt.text)}
             
             >
-              <p className="text-sm mb-4 text-zinc-400">{prompt.text}</p>
+              <p className="text-sm mb-4 dark:text-zinc-400 text-gray-700">{prompt.text}</p>
               {/* <i className={`${prompt.icon} text-xl text-gray-400`}></i> */}
             </div>
           ))}
@@ -167,21 +167,21 @@ export default function Welcome() {
       )}
 
       {/* Helper div for mobile view */}
-      <div className="md:hidden bg-neutral-900 fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
+      <div className="md:hidden dark:bg-neutral-900 bg-[#ffffff]fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
       {/* Input Box */}
-      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static bg-[#0e0e0e] rounded-xl md:p-4 md:w-full max-w-4xl mx-auto shadow-lg border border-gray-800">
+      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static dark:bg-[#0e0e0e] bg-[#ffffff] rounded-xl md:p-4 md:w-full max-w-4xl mx-auto shadow-lg border dark:border-gray-800 border-gray-200">
         {/* Input area */}
         <textarea
           rows={1}
           placeholder="Ask Anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="w-full bg-transparent resize-none text-gray-200 placeholder-zinc-500 outline-none p-2 text-sm"
+          className="w-full bg-transparent resize-none dark:text-gray-200 text-gray-800 placeholder-zinc-500 outline-none p-2 text-sm"
         ></textarea>
 
         {/* Bottom Bar with Send Button */}
         <div className="flex justify-between mt-2 items-center">
-          <div className="flex flex-1 items-center justify-start gap-4 text-white text-lg md:p-2">
+          <div className="flex flex-1 items-center justify-start gap-4 dark:text-white text-gray-700 text-lg md:p-2">
             {/* Plus Icon */}
             <i className="ri-add-line cursor-pointer hover:text-cyan-400 transition"></i>
 
@@ -194,8 +194,8 @@ export default function Welcome() {
             disabled={generatingResponse}
             className={
               generatingResponse
-                ? "hidden md:block flex items-center gap-2 bg-gray-400  text-neutral-300 text-sm font-medium px-4 py-1.5 rounded-md transition"
-                : "hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-gray-200 text-sm font-medium px-4 py-1.5 rounded-md transition"
+                ? "hidden md:block flex items-center gap-2 bg-gray-400  text-white text-sm font-medium px-4 py-1.5 rounded-md transition"
+                : "hidden md:block flex items-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-medium px-4 py-1.5 rounded-md transition"
             }
           >
             {/* <i className="ri-send-plane-fill"></i> */}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import ThemeToggler from '../ThemeToggler';
 
 const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +67,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
   };
 
   return (
-    <nav className="bg-[#0a0a0a] sticky top-0 z-90 w-full">
+    <nav className="dark:bg-[#0a0a0a] bg-[#ffffff] sticky top-0 z-90 w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -76,7 +77,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
             whileHover="hover"
           >
             
-            <span className="text-2xl font-semibold text-[#e5e7eb]">Co<span className=' text-[#00b1cc] '>Aegis</span></span>
+            <span className="text-2xl font-semibold dark:text-[#e5e7eb] text-gray-700">Co<span className='dark:text-[#00b1cc] text-cyan-500'>Aegis</span></span>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -93,7 +94,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
                 onClick={item.onClickFunction}
               >
                 <motion.button
-                  className="flex items-center space-x-1 text-[#e5e7eb] hover:text-[#00b1cc] transition-colors duration-200 py-2 px-3 rounded-md"
+                  className="flex items-center space-x-1 dark:text-[#e5e7eb] text-gray-700 hover:text-[#00b1cc] transition-colors duration-200 py-2 px-3 rounded-md"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -133,7 +134,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
            
 
             <motion.button
-              className="text-[#e5e7eb] hover:text-[#00b1cc] transition-colors duration-200 py-2 px-4 rounded-md font-medium"
+              className="dark:text-[#e5e7eb] text-gray-700 hover:text-[#00b1cc] transition-colors duration-200 py-2 px-4 rounded-md font-medium"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/login')}
@@ -150,11 +151,15 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
             >
               Register
             </motion.button>
+
+            <ThemeToggler />
           </div>
 
           {/* Mobile menu button */}
+          <div className="md:hidden flex items-center space-x-4">
+          <ThemeToggler/>
           <motion.button
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-md text-[#e5e7eb]"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-md dark:text-[#e5e7eb] text-gray-700"
             onClick={() => setIsOpen(!isOpen)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -184,6 +189,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
               )}
             </motion.svg>
           </motion.button>
+          </div>
         </div>
       </div>
 
@@ -191,12 +197,13 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden bg-[#0a0a0a] border-t border-gray-800"
+            className="md:hidden dark:bg-[#0a0a0a] bg-[#ffffff] border-t border-gray-800"
             variants={menuVariants}
             initial="closed"
             animate="open"
             exit="closed"
           >
+            
             <div className="px-4 py-4 space-y-2">
               {navItems.map((item, index) => (
                 <motion.div
@@ -206,7 +213,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
                   onClick={item.onClickFunction}
                 >
                   <motion.button
-                    className="flex items-center justify-between w-full text-[#e5e7eb] hover:text-[#00b1cc] transition-colors duration-200 py-3 px-4 rounded-md hover:bg-gray-800"
+                    className="flex items-center justify-between w-full dark:text-[#e5e7eb] text-gray-700 hover:text-[#00b1cc] transition-colors duration-200 py-3 px-4 rounded-md hover:bg-gray-800"
                     whileHover={{ x: 5 }}
                   >
                     <span className="font-medium">{item.name}</span>
@@ -236,7 +243,7 @@ const Navbar = ({ onAboutClick, onServicesClick, onContactClick, onCoreValuesCli
                 
                 
                 <motion.button
-                  className="text-[#e5e7eb] hover:text-[#00b1cc] transition-colors duration-200 py-3 px-4 rounded-md font-medium hover:bg-gray-800 w-full text-left"
+                  className="dark:text-[#e5e7eb] text-gray-700 hover:text-[#00b1cc] transition-colors duration-200 py-3 px-4 rounded-md font-medium hover:bg-gray-800 w-full text-left"
                   whileHover={{ x: 5 }}
                   onClick={() => navigate('/login')}
                 >

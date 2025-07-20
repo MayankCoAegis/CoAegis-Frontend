@@ -92,14 +92,14 @@ function Login() {
   //   }, [user]);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('/bglogin3.jpg')] bg-cover bg-center] px-4">
+    <div className="flex items-center justify-center min-h-screen dark:bg-[url('/bglogin3.jpg')] bg-[url('/17580.jpg')] bg-cover bg-center  px-4">
       {showForgetPasswordDiv ? (
-        <div className="flex flex-col md:flex-row w-full md:w-3/5 max-w-5xl h-auto md:h-3/4 rounded-2xl shadow-lg/30 bg-neutral-900  overflow-hidden">
-          <div className="w-full h-auto py-10 px-6 md:px-8 flex flex-col text-white">
+        <div className="flex flex-col md:flex-row w-full md:w-3/5 max-w-5xl h-auto md:h-3/4 rounded-2xl shadow-lg/30 dark:bg-neutral-900 bg-[#ffffff] overflow-hidden">
+          <div className="w-full h-auto py-10 px-6 md:px-8 flex flex-col dark:text-white text-gray-700">
             {/* Header */}
             <div className="flex flex-col gap-1 mb-8">
               <p className="!text-2xl font-semibold">Forgot Password</p>
-              <p className="!text-sm text-gray-400">Enter you email and we'll get back to you!</p>
+              <p className="!text-sm dark:text-gray-400 text-gray-800">Enter you email and we'll get back to you!</p>
             </div>
 
             {/* Form */}
@@ -107,11 +107,11 @@ function Login() {
               <div className="flex flex-col gap-6">
                 {/* Email */}
                 <div className="flex flex-col gap-1">
-                  <label className="text-sm text-gray-400">Registered Email Address</label>
+                  <label className="text-sm dark:text-gray-400 text-gray-700">Registered Email Address</label>
                   <input
                     type="email"
                     placeholder="Enter Email"
-                    className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
+                    className="text-sm dark:bg-neutral-800 bg-gray-200 dark:text-gray-300 text-gray-800 dark:placeholder-gray-500 placeholder-gray-700 border dark:border-gray-700 border-gray-200 rounded-md p-2 outline-none dark:focus:ring-2 focus:ring-0 focus:ring-cyan-600"
                     value={email}
                     onChange={(e) => handleInputChange(e, "email")}
                   />
@@ -120,7 +120,7 @@ function Login() {
                 {/* Button */}
                 <div className="flex flex-row justify-between items-center">
                   <button
-                    className="bg-cyan-600 hover:bg-cyan-500 text-white text-xs md:text-sm   rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105"
+                    className="dark:bg-cyan-600 bg-cyan-500 hover:bg-cyan-500 text-white text-xs md:text-sm   rounded-md px-6 py-2 shadow-md transition duration-200 ease-in-out hover:scale-105"
                     onClick={handleForgotPassword}
                   >
                     Send Reset Link
@@ -131,7 +131,7 @@ function Login() {
              
 
               {/* Register Link */}
-              <p className="text-xs text-center text-gray-400 transition duration-200 ease-in-out hover:scale-105">
+              <p className="text-xs text-center dark:text-gray-400 text-gray-700 transition duration-200 ease-in-out hover:scale-105">
                 Return to{" "}
                 <span
                   className="text-cyan-400 cursor-pointer hover:underline transition duration-200 ease-in-out hover:scale-105"
@@ -145,7 +145,7 @@ function Login() {
 
         </div>
       ) : (
-        <div className="flex flex-col md:flex-row w-full md:w-3/5 max-w-5xl h-auto md:h-3/4 rounded-2xl shadow-lg/30 bg-neutral-900  overflow-hidden">
+        <div className="flex flex-col md:flex-row w-full md:w-3/5 max-w-5xl h-auto md:h-3/4 rounded-2xl shadow-lg/30 dark:bg-neutral-900 bg-[#ffffff] overflow-hidden">
           {/* Left Image */}
           <div className="w-full md:w-3/5 h-64 md:h-auto md:block hidden md:flex md-items-center md:justify-center relative">
             {/* <img
@@ -153,17 +153,17 @@ function Login() {
             alt="Login"
             className="h-full w-full object-cover bg"
           /> */}
-            <h1 className="text-white text-7xl font-medium text-shadow-lg items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
-              Co<span className="text-cyan-400">Aegis</span>
+            <h1 className="dark:text-white text-gray-700 text-7xl font-medium text-shadow-lg items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ">
+              Co<span className="dark:text-cyan-400 text-cyan-500">Aegis</span>
             </h1>
           </div>
 
           {/* Right Form */}
-          <div className="w-full md:w-2/5 h-auto py-10 px-6 md:px-8 flex flex-col text-white">
+          <div className="w-full md:w-2/5 h-auto py-10 px-6 md:px-8 flex flex-col dark:text-white text-gray-700">
             {/* Header */}
             <div className="flex flex-col gap-1 mb-4">
               <p className="text-2xl font-semibold">Sign In</p>
-              <p className="text-sm text-gray-400">Welcome back!</p>
+              <p className="text-sm dark:text-gray-400 text-gray-800">Welcome back!</p>
             </div>
 
             {/* Form */}
@@ -171,11 +171,11 @@ function Login() {
               <div className="flex flex-col gap-6">
                 {/* Email */}
                 <div className="flex flex-col gap-1">
-                  <label className="text-sm text-gray-400">Username</label>
+                  <label className="text-sm dark:text-gray-400 text-gray-700">Username</label>
                   <input
                     type="text"
                     placeholder="Enter username"
-                    className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
+                    className="text-sm dark:bg-neutral-800 bg-neutral-200 dark:text-gray-300 text-gray-800 dark:placeholder-gray-500 placeholder-gray-600 border dark:border-gray-700 border-gray-200 rounded-md p-2 outline-none dark:focus:ring-2 focus:ring-0 focus:ring-cyan-600"
                     value={username}
                     onChange={(e) => handleInputChange(e, "username")}
                   />
@@ -183,11 +183,11 @@ function Login() {
 
                 {/* Password */}
                 <div className="flex flex-col gap-1">
-                  <label className="text-sm text-gray-400">Password</label>
+                  <label className="text-sm dark:text-gray-400 text-gray-700">Password</label>
                   <input
                     type="password"
                     placeholder="Enter password"
-                    className="text-sm bg-neutral-800 text-gray-300 placeholder-gray-500 border border-gray-700 rounded-md p-2 outline-none focus:ring-2 focus:ring-cyan-600"
+                    className="text-sm dark:bg-neutral-800 bg-neutral-200 dark:text-gray-300 text-gray-800 dark:placeholder-gray-500 placeholder-gray-600 border dark:border-gray-700 border-gray-200 rounded-md p-2 outline-none dark:focus:ring-2 focus:ring-0 focus:ring-cyan-600"
                     value={password}
                     onChange={(e) => handleInputChange(e, "password")}
                   />
@@ -216,7 +216,7 @@ function Login() {
             </button> */}
 
               {/* Register Link */}
-              <p className="text-xs text-center text-gray-400 transition duration-200 ease-in-out hover:scale-105">
+              <p className="text-xs text-center dark:text-gray-400 text-gray-600 transition duration-200 ease-in-out hover:scale-105">
                 Don't have an account?{" "}
                 <span
                   className="text-cyan-400 cursor-pointer hover:underline transition duration-200 ease-in-out hover:scale-105"

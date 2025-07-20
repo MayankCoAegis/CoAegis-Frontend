@@ -47,7 +47,7 @@ const containerVariants = {
 export default function CoreValuesSection() {
   return (
     <motion.section
-      className="bg-[#0a0a0a] text-[#e5e7eb] py-20 px-6 w-full" 
+      className="dark:bg-[#0a0a0a] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700 py-20 px-6 w-full" 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
@@ -74,14 +74,14 @@ export default function CoreValuesSection() {
               className={`rounded-lg p-8 flex flex-col items-center text-center shadow-lg transition-colors duration-300 ${
                 value.highlighted
                   ? "bg-[#00b1cc] text-white"
-                  : "bg-[#1f1f1f]"
+                  : "dark:bg-[#1f1f1f] bg-[#ffffff] dark:text-[#e5e7eb] text-gray-700"
               }`}
             >
               <div className={`mb-4 w-16 h-16 flex items-center justify-center rounded-full ${value.highlighted ? "bg-white text-[#00b1cc]" : "bg-[#00b1cc]"}`}>
                 {value.icon}
               </div>
               <h3 className=" text-md md:text-xl font-semibold mb-4">{value.title}</h3>
-              <p className="text-xs md:text-sm leading-relaxed text-[#e5e7eb]">
+              <p className="text-xs md:text-sm leading-relaxed">
                 {value.description}
               </p>
             </motion.div>

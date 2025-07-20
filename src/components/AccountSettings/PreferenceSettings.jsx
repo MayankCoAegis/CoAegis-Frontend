@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 
 export default function PreferenceSettings(){
@@ -9,7 +9,17 @@ export default function PreferenceSettings(){
     advancedMode: false,
   });
 
-  const {useTheme}=useTheme();
+  const {toggleTheme,theme}=useTheme();
+
+  useEffect(() => {
+   setSettings({
+      darkMode: theme === 'dark',
+      autoSaveChats: true,
+      emailNotifications: false,
+      advancedMode: false,
+    });
+  }, []);
+
 
   const handleToggle = (key) => {
     const newSettings = {
@@ -25,7 +35,14 @@ export default function PreferenceSettings(){
     console.log(`Setting "${key}" updated to`, value);
     if(key=="darkMode")
       {
-
+        if(value==true && theme=="light")
+        {
+          toggleTheme();
+        }
+        else if(value==false && theme=="dark")
+        {
+          toggleTheme();
+        }
       };
     // TODO: Implement API call here
   };
@@ -68,11 +85,11 @@ export default function PreferenceSettings(){
             className="flex justify-between items-center border-b border-gray-600 pb-4"
           >
             <div>
-              <div className="text-sm font-semibold flex items-center gap-2">
-                <span>{option.icon}</span>
+              <div className="dark:text-gray-200 text-gray-700 text-sm font-semibold flex items-center gap-2">
+                <span >{option.icon}</span>
                 {option.title}
               </div>
-              <div className="text-xs text-gray-400">{option.description}</div>
+              <div className="text-xs dark:text-gray-400 text-gray-800">{option.description}</div>
             </div>
 
             <label className="relative inline-flex items-center cursor-pointer">

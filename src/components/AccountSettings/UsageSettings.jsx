@@ -13,12 +13,12 @@ export default function UsageSettings(){
       description: "Number of unique chat sessions you initiated."
     },
     
-    {
-      label: "Monthly Usage",
-      value: "89%",
-      description: "You've consumed 89% of your allowed usage quota this month.",
-      barWidth: "89%",
-    },
+    // {
+    //   label: "Monthly Usage",
+    //   value: "89%",
+    //   description: "You've consumed 89% of your allowed usage quota this month.",
+    //   barWidth: "89%",
+    // },
   ];
 
   return (
@@ -27,10 +27,10 @@ export default function UsageSettings(){
 
       <div className="space-y-6">
         {stats.map((item, idx) => (
-          <div key={idx} className="bg-[#1f1f1f] p-4 rounded-md">
+          <div key={idx} className="dark:bg-[#1f1f1f] bg-gray-100 p-4 rounded-md">
             <div className="text-cyan-400 text-xl font-semibold mb-1">{item.value}</div>
-            <div className="text-gray-300 text-sm font-medium mb-2">{item.label}</div>
-            <div className="text-gray-400 text-xs leading-relaxed">{item.description}</div>
+            <div className="dark:text-gray-300 text-gray-700 text-sm font-medium mb-2">{item.label}</div>
+            <div className="dark:text-gray-400 text-gray-800 text-xs leading-relaxed">{item.description}</div>
 
             {item.barWidth && (
               <div className="w-full h-2 bg-gray-700 rounded-full mt-3">

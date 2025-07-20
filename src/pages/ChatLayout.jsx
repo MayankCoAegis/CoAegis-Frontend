@@ -245,7 +245,7 @@ const ChatLayout = () => {
   }, []);
 
   return (
-    <div className="flex h-screen bg-neutral-950">
+    <div className="flex h-screen dark:bg-neutral-950 bg-[#f0f4f9]">
       {/* SideMenu Div */}
       <div className="flex flex-col h-full">
         <Sidebar
@@ -260,7 +260,7 @@ const ChatLayout = () => {
       {/* SideMenu Div ends */}
 
       {/* MainChat Div*/}
-      <div className="flex flex-col flex-1 bg-neutral-900 m-0 md:m-4 md:ml-0 rounded-lg shadow-lg/50 border-1 border-neutral-800">
+      <div className="flex flex-col flex-1 dark:bg-neutral-900 bg-[#ffffff] m-0 md:m-4 md:ml-0 rounded-lg dark:shadow-lg/50 shadow-md/20 border-1 dark:border-neutral-800 border-neutral-100">
         {/* Navbar */}
         <div className="md:hidden flex flex-row w-full items-center justify-between p-4 py-2">
           <div className="md:hidden items-center">
