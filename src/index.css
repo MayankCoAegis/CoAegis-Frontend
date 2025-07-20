@@ -17,7 +17,7 @@ html, body {
 .dark html, .dark body {
   background-color: #0a0a0a;
 }
-html,body{
+.light html,.light body{
   background-color: #ffffff;
 }
 *,*::before,*::after{
