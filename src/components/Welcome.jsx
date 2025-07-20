@@ -143,7 +143,7 @@ export default function Welcome() {
           {prompts.map((prompt, index) => (
             <div
               key={index}
-              className="dark:bg-[#121212] bg-[#f0f4f9] text-white p-4 rounded-xl shadow-lg border dark:border-gray-800 border-gray-200 dark:hover:border-cyan-500 hover:border-cyan-400  cursor-pointer transition hover:scale-105"
+              className="dark:bg-[#121212] bg-[#f0f4f9] text-white p-4 rounded-xl shadow-lg border dark:border-gray-800 border-gray-200 dark:hover:border-cyan-400 hover:border-cyan-400  cursor-pointer transition hover:scale-105"
               onClick={() => handlePromptClick(prompt.text)}
             >
               <p className="text-sm mb-4 dark:text-zinc-400 text-gray-700">
@@ -168,9 +168,9 @@ export default function Welcome() {
       )}
 
       {/* Helper div for mobile view */}
-      <div className="md:hidden dark:bg-neutral-900 bg-[#ffffff]fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
+      <div className="md:hidden dark:bg-neutral-900 bg-[#ffffff] fixed bottom-0 w-[calc(100%-2rem)] p-3"></div>
       {/* Input Box */}
-      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static dark:bg-[#0e0e0e] bg-[#ffffff] rounded-xl md:p-4 md:w-full max-w-4xl mx-auto shadow-lg border dark:border-gray-800 border-gray-200">
+      <div className="fixed bottom-0 w-[calc(100%-2rem)] p-3 mb-4 md:static dark:bg-[#0e0e0e] bg-[#ffffff] rounded-xl md:p-4 md:w-full max-w-4xl mx-auto shadow-lg border dark:border-neutral-700 dark:md:border-gray-800 border-gray-200">
         {/* Input area */}
         <textarea
           rows={1}

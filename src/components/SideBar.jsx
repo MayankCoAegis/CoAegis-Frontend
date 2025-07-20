@@ -64,7 +64,11 @@ const Sidebar = ({
         isOpen={isSearchModalOpen}
         onClose={handleSearchModalClose}
       />
-      <EditAddressModal isOpen={isModalOpen} onClose={handleModalClose} setChatHistory={setChatHistory}/>
+      <EditAddressModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        setChatHistory={setChatHistory}
+      />
       {/* Sidebar */}
       <div
         className={`w-72 min-w-[250px] h-screen dark:bg-neutral-950 bg-[#f0f4f9] text-white flex flex-col justify-between p-5 gap-8 fixed z-20 transition-transform duration-300 ${
@@ -79,11 +83,14 @@ const Sidebar = ({
               <span className="text-cyan-500">CoAegis</span>
             </h1>
           </div>
+          <div className="flex flex-row gap-4 items-center">
+            <ThemeToggler />
           <i
-            className="ri-close-line text-lg md:hidden"
+            className="dark:text-white text-gray-700 ri-close-line text-lg md:hidden"
             onClick={() => setisSideBarOpen(!isSideBarOpen)}
           ></i>
-          <ThemeToggler />
+          </div>
+          
         </div>
 
         {/* SubMenu */}
@@ -107,20 +114,24 @@ const Sidebar = ({
         </div>
 
         {/* Chat Sessions */}
-        <p className="dark:text-neutral-400 text-neutral-600 font-medium text-sm mb-[-15px]">Chats</p>
+        <p className="dark:text-neutral-400 text-neutral-600 font-medium text-sm mb-[-15px]">
+          Chats
+        </p>
         <div className="flex-1 overflow-y-auto space-y-6 dark:dark-scrollbar light-scrollbar py-4 pr-4">
           <div>
             <div className="  flex flex-col ">
               {chatHistory &&
                 chatHistory.length > 0 &&
-                chatHistory.toReversed().map((chat, index) => (
-                  <ChatTitleComponent
-                    chat={chat}
-                    index={index}
-                    chatHistory={chatHistory}
-                    setChatHistory={setChatHistory}
-                  />
-                ))}
+                chatHistory
+                  .toReversed()
+                  .map((chat, index) => (
+                    <ChatTitleComponent
+                      chat={chat}
+                      index={index}
+                      chatHistory={chatHistory}
+                      setChatHistory={setChatHistory}
+                    />
+                  ))}
             </div>
           </div>
         </div>

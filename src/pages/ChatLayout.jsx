@@ -230,16 +230,15 @@ const ChatLayout = () => {
     // console.log("Fetching Chats");
     const fetchChats = async () => {
       const response = await getUserChats();
-      
+
       if (response.success) {
         // console.log("Chats Fetched Successfully", response.chats);
         setChatHistory(response.chats);
         setLoading(false);
-      } else
-      {
+      } else {
         console.log("Chats fetch failed", response.message);
         setLoading(false);
-      } 
+      }
     };
     fetchChats();
   }, []);
@@ -268,7 +267,7 @@ const ChatLayout = () => {
               onClick={() => setisSideBarOpen(!isSideBarOpen)}
               className=" rounded-md text-white"
             >
-              <i className="ri-menu-line text-xl"></i>
+              <i className="ri-menu-line text-xl dark:text-white text-gray-700"></i>
             </button>
           </div>
           {/* <SelectModel /> */}
@@ -279,7 +278,7 @@ const ChatLayout = () => {
             className="md:hidden items-center"
             onClick={() => navigate("/chat")}
           >
-            <i class="ri-pencil-line text-white text-lg"></i>
+            <i class="ri-pencil-line dark:text-white text-gray-700 text-lg"></i>
           </div>
 
           <div className="hidden items-center gap-2 p-2 md:flex">
@@ -305,7 +304,18 @@ const ChatLayout = () => {
         </div>
 
         <div className="pb-[140px] md:p-0 flex flex-col overflow-y-auto md:flex-1">
-          <ChatContext.Provider value={{ chatData, setChatData,chatHistory, setChatHistory ,newChatHistory, setNewChatHistory,IsnewChat, setIsnewChat}}>
+          <ChatContext.Provider
+            value={{
+              chatData,
+              setChatData,
+              chatHistory,
+              setChatHistory,
+              newChatHistory,
+              setNewChatHistory,
+              IsnewChat,
+              setIsnewChat,
+            }}
+          >
             <Outlet /> {/* This will render ChatMain, ProfilePage, etc. */}
           </ChatContext.Provider>
         </div>
