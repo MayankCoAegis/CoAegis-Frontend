@@ -31,23 +31,20 @@ export default function Welcome() {
   const bottomRef = useRef(null);
   const [generatingResponse, setGeneratingResponse] = useState(false);
   const navigate = useNavigate();
-  const { chatHistory, setChatHistory,setNewChatHistory,setIsnewChat } = useContext(ChatContext);
+  const { chatHistory, setChatHistory, setNewChatHistory, setIsnewChat } =
+    useContext(ChatContext);
 
-  const handleSend = async ({prompt=""}) => {
+  const handleSend = async ({ prompt = "" }) => {
     setGeneratingResponse(true);
     setShowChat(true);
-    let userText="";
-    if(prompt.length>0)
-    {
-      userText=prompt
-    }
-    else
-    {
+    let userText = "";
+    if (prompt.length > 0) {
+      userText = prompt;
+    } else {
       if (!message.trim()) return;
 
-     userText = message;
+      userText = message;
     }
-    
 
     // Step 1: Add user's message with empty assistant field (awaiting response)
     setChat((prevChat) => [
@@ -79,7 +76,15 @@ export default function Welcome() {
         },
       ]);
       setIsnewChat(true);
-      setNewChatHistory([{User:userText,Assistant:response.response,isTemporary:false,shouldAnimate:true,animationDone:false}]);
+      setNewChatHistory([
+        {
+          User: userText,
+          Assistant: response.response,
+          isTemporary: false,
+          shouldAnimate: true,
+          animationDone: false,
+        },
+      ]);
       navigate(`/chat/${response.session_id}`);
     }
 
@@ -88,8 +93,7 @@ export default function Welcome() {
       const updatedChat = [...prevChat];
       updatedChat[updatedChat.length - 1] = {
         User: userText,
-        Assistant:
-          "Error: Failed to generate response.",
+        Assistant: "Error: Failed to generate response.",
         isTemporary: false,
         shouldAnimate: true,
         animationDone: false,
@@ -101,18 +105,13 @@ export default function Welcome() {
     setGeneratingResponse(false);
   };
 
-
-  const handlePromptClick=async(promptText)=>{
-    handleSend({prompt:promptText});
-    
-  }
-
-
+  const handlePromptClick = async (promptText) => {
+    handleSend({ prompt: promptText });
+  };
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
-
 
   return (
     <div className="md:static flex flex-col items-center justify-center md:h-full p-4 md:p-0 md:px-2 md:m-0 w-full gap-2">
@@ -125,7 +124,8 @@ export default function Welcome() {
 
           {/* Heading */}
           <h1 className="dark:text-white text-gray-600 text-xl md:text-3xl font-medium dark:text-shadow-lg">
-            Welcome to <span className="dark:text-cyan-500 text-cyan-400">CoAegis</span>
+            Welcome to{" "}
+            <span className="dark:text-cyan-500 text-cyan-400">CoAegis</span>
           </h1>
 
           {/* Subtext */}
@@ -145,9 +145,10 @@ export default function Welcome() {
               key={index}
               className="dark:bg-[#121212] bg-[#f0f4f9] text-white p-4 rounded-xl shadow-lg border dark:border-gray-800 border-gray-200 dark:hover:border-cyan-500 hover:border-cyan-400  cursor-pointer transition hover:scale-105"
               onClick={() => handlePromptClick(prompt.text)}
-            
             >
-              <p className="text-sm mb-4 dark:text-zinc-400 text-gray-700">{prompt.text}</p>
+              <p className="text-sm mb-4 dark:text-zinc-400 text-gray-700">
+                {prompt.text}
+              </p>
               {/* <i className={`${prompt.icon} text-xl text-gray-400`}></i> */}
             </div>
           ))}
@@ -176,6 +177,7 @@ export default function Welcome() {
           placeholder="Ask Anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          
           className="w-full bg-transparent resize-none dark:text-gray-200 text-gray-800 placeholder-zinc-500 outline-none p-2 text-sm"
         ></textarea>
 

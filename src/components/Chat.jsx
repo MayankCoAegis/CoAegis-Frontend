@@ -234,6 +234,7 @@ function Chat() {
           placeholder="Ask Anything..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          
           className="w-full bg-transparent resize-none dark:text-gray-200 text-gray-700 placeholder-zinc-500 outline-none p-2 text-sm"
         ></textarea>
 
