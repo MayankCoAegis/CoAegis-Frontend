@@ -7,7 +7,7 @@ import {registerUser} from '../api/auth';
 
 function Register() {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ username: "", email: "", phone: "", password: "" });
+  const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState("");
@@ -103,7 +103,7 @@ function Register() {
                   />
                 </div>
 
-                <div className="flex flex-col gap-1">
+                {/* <div className="flex flex-col gap-1">
                   <label className="text-sm dark:text-gray-400 text-gray-800">Phone</label>
                   <input
                     type="tel"
@@ -115,7 +115,7 @@ function Register() {
                     onChange={handleChange}
                     className="text-sm dark:bg-neutral-800 bg-neutral-200 dark:text-gray-300 text-gray-800 dark:placeholder-gray-500 placeholder-gray-600 border dark:border-gray-700 border-gray-200 rounded-md p-2 outline-none dark:focus:ring-2 focus:ring-0 focus:ring-cyan-600"
                   />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col gap-1">
                   <label className="text-sm dark:text-gray-400 text-gray-800">Password</label>
