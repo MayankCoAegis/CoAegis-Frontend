@@ -119,13 +119,14 @@ box-sizing: border-box;
 .assistant-response ul,
 .assistant-response ol {
   list-style: none; /* Remove default bullets/numbers */
-  padding-left: 1.5rem;
+  /* padding-left: 1.5rem; */
+  margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
 .assistant-response li {
   position: relative;
-  padding-left: 1rem;
+  /* padding-left: 1rem; */
   margin-bottom: 0.4rem;
 }
 
