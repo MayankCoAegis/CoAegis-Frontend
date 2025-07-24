@@ -20,7 +20,7 @@ API.interceptors.request.use(async (config) => {
   let token = localStorage.getItem("accessToken"); // Remove await - not needed for localStorage
   
   if (token && isTokenExpired(token)) {
-    console.log("Access token expired — refreshing...", token);
+    // console.log("Access token expired — refreshing...", token);
     try {
       token = await refreshAccessToken();
       console.log("New token after refresh:", token);
@@ -37,10 +37,10 @@ API.interceptors.request.use(async (config) => {
 
     config.headers.Authorization = `Bearer ${token}`;
      config.headers['ngrok-skip-browser-warning'] = 'true';
-    console.log('Authorization Header added:', config.headers.Authorization);
+    // console.log('Authorization Header added:', config.headers.Authorization);
    
   } else {
-    console.log("No token available - request will be sent without Authorization header");
+    // console.log("No token available - request will be sent without Authorization header");
   }
 
   return config;
@@ -53,7 +53,7 @@ export const SearchChat = async (text) => {
 
     
     if (response.data) {
-        console.log("Response from SearchChat API:", response);
+        // console.log("Response from SearchChat API:", response);
       return {
         success: true,
         message: "Search chats Fetched Successfully",

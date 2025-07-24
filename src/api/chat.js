@@ -21,10 +21,10 @@ API.interceptors.request.use(async (config) => {
   let token = localStorage.getItem("accessToken"); // Remove await - not needed for localStorage
   
   if (token && isTokenExpired(token)) {
-    console.log("Access token expired — refreshing...", token);
+    // console.log("Access token expired — refreshing...", token);
     try {
       token = await refreshAccessToken();
-      console.log("New token after refresh:", token);
+      // console.log("New token after refresh:", token);
     } catch (error) {
       console.error("Token refresh failed:", error);
       // Handle refresh failure (redirect to login, etc.)
@@ -32,16 +32,16 @@ API.interceptors.request.use(async (config) => {
     }
   }
   else
-  console.log("Access Token valid")
+  // console.log("Access Token valid")
 
   if (token) {
 
     config.headers.Authorization = `Bearer ${token}`;
      config.headers['ngrok-skip-browser-warning'] = 'true';
-    console.log('Authorization Header added:', config.headers.Authorization);
+    // console.log('Authorization Header added:', config.headers.Authorization);
    
   } else {
-    console.log("No token available - request will be sent without Authorization header");
+    // console.log("No token available - request will be sent without Authorization header");
   }
 
   return config;
@@ -111,14 +111,14 @@ export const getChatResponse = async (id, message) => {
 
       const formData = new URLSearchParams();
       formData.append("text", message);
-console.log('url',`/user/chats/${id}/text`)
+// console.log('url',`/user/chats/${id}/text`)
     const response = await API.post(`/user/chats/${id}/text/`,formData, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
 
-   console.log('Response from getChatResponse:', response);
+  //  console.log('Response from getChatResponse:', response);
     
 
     
@@ -179,7 +179,7 @@ export const RenameChatById = async (id,rename) => {
   try {
     const response = await API.put(`/user/chats/${id}/rename/${rename}/`);
 
-    console.log("Response from RenameChatById:", response);
+    // console.log("Response from RenameChatById:", response);
     if (response.data) {
       return {
         success: true,
@@ -206,7 +206,7 @@ export const RenameChatById = async (id,rename) => {
 export const DeleteAllChats = async () => {
   try {
     const response = await API.delete(`/user/chats/del/`);
-    console.log("Response from DeleteAllChats:", response);
+    // console.log("Response from DeleteAllChats:", response);
     if (response.status==204) {
       return {
         success: true,

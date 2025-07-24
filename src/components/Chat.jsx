@@ -26,11 +26,11 @@ function Chat() {
     const fetchChat = async () => {
       const response = await getChatById(chatId);
       if (response.success) {
-        console.log(`Chat ${chatId} Fetched Successfully`, response.chats);
+        // console.log(`Chat ${chatId} Fetched Successfully`, response.chats);
         setChat(response.chats);
         setLoading(false);
       } else {
-        console.log(`Chat ${chatId} fetch failed`, response.message);
+        // console.log(`Chat ${chatId} fetch failed`, response.message);
         setLoading(false);
       }
     };
@@ -112,7 +112,7 @@ function Chat() {
 
     // Step 2: Simulate API response
     const response = await getChatResponse(chatId, userText);
-    console.log("Response from API:", response);
+    // console.log("Response from API:", response);
 
     // Step 3: Replace the last message with full message containing actual assistant response
     setChat((prevChat) => {

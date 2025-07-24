@@ -278,7 +278,7 @@ const ChatLayout = () => {
             className="md:hidden items-center"
             onClick={() => navigate("/chat")}
           >
-            <i class="ri-pencil-line dark:text-white text-gray-700 text-lg"></i>
+            <i className="ri-pencil-line dark:text-white text-gray-700 text-lg"></i>
           </div>
 
           <div className="hidden items-center gap-2 p-2 md:flex">

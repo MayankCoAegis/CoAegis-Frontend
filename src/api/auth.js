@@ -86,7 +86,7 @@ export const loginUser = async (username, password) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    console.log(response);
+    // console.log(response);
 
     // Assuming backend returns access and refresh tokens
     if (response.data.access_token && response.data.refresh_token) {
@@ -110,7 +110,7 @@ export const loginUser = async (username, password) => {
 export const refreshAccessToken = async () => {
   try {
     const refresh_token = await localStorage.getItem("refreshToken");
-    console.log("Sending Refresh Token...",refresh_token);
+    // console.log("Sending Refresh Token...",refresh_token);
     const formData = new URLSearchParams();
     formData.append("refresh_token", refresh_token);
 
@@ -120,7 +120,7 @@ export const refreshAccessToken = async () => {
       },
     });
 
-    console.log("Response of refreshAccessToken", response);
+    // console.log("Response of refreshAccessToken", response);
     if (response.data.access_token) {
       localStorage.setItem("accessToken", response.data.access_token);
       return response.data.access_token;
@@ -144,7 +144,7 @@ export const registerUser = async (form) => {
         "Content-Type": "application/x-www-form-urlencoded",
       },
     });
-    console.log("Response from Register User:", response);
+    // console.log("Response from Register User:", response);
     if (response.data.message) {
       return {
         success: true,
@@ -169,7 +169,7 @@ export const VerifyUser = async (token) => {
   try {
     
     const response = await API.get(`/verify/${token}/`);
-    console.log("Response from Verification API:", response);
+    // console.log("Response from Verification API:", response);
     if (response.data.message) {
       return {
         success: true,

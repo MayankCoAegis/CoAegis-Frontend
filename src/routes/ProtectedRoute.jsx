@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
     if (refreshToken && !isTokenExpired(refreshToken)) {
       try {
         // const userData = await verifyTokenAndGetUser(token);
-        console.log("refresh token valid")
+        // console.log("refresh token valid")
         const response=await getUser();
         // console.log("response from get User",response)
        if(response.success)
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
       }
     } else {
     
-        console.log("No RefreshToken found, Redirecting to Login");
+        // console.log("No RefreshToken found, Redirecting to Login");
         setMessage("Session Expired, Please log in again");
         setShowSnackBar(true);
         setUser(null); // Ensure user state is cleared if no token

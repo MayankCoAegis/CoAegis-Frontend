@@ -127,7 +127,7 @@ const Sidebar = ({
                   .map((chat, index) => (
                     <ChatTitleComponent
                       chat={chat}
-                      index={index}
+                      key={index}
                       chatHistory={chatHistory}
                       setChatHistory={setChatHistory}
                     />

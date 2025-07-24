@@ -20,10 +20,10 @@ API.interceptors.request.use(async (config) => {
   let token = localStorage.getItem("accessToken"); // Remove await - not needed for localStorage
   
   if (token && isTokenExpired(token)) {
-    console.log("Access token expired — refreshing...", token);
+    // console.log("Access token expired — refreshing...", token);
     try {
       token = await refreshAccessToken();
-      console.log("New token after refresh:", token);
+      // console.log("New token after refresh:", token);
     } catch (error) {
       console.error("Token refresh failed:", error);
       // Handle refresh failure (redirect to login, etc.)
@@ -31,13 +31,13 @@ API.interceptors.request.use(async (config) => {
     }
   }
   else
-  console.log("Access Token valid")
+  // console.log("Access Token valid")
 
   if (token) {
 
     config.headers.Authorization = `Bearer ${token}`;
      config.headers['ngrok-skip-browser-warning'] = 'true';
-    console.log('Authorization Header added:', config.headers.Authorization);
+    // console.log('Authorization Header added:', config.headers.Authorization);
    
   } else {
     console.log("No token available - request will be sent without Authorization header");
@@ -50,7 +50,7 @@ API.interceptors.request.use(async (config) => {
 export const getUser = async () => {
   try {
     const response = await API.get("/user/");
-    console.log("Response from getUserAPI:", response);
+    // console.log("Response from getUserAPI:", response);
     // Assuming backend returns access and refresh tokens
     if (response.data.id) {
       return {
@@ -142,7 +142,7 @@ export const forgotPasswordAPI = async (email) => {
     const formData = new URLSearchParams();
       formData.append("email", email);
     const response = await API2.post("/forgotpass/",formData);
-    console.log("Response from forgotPasswordAPI:", response);
+    // console.log("Response from forgotPasswordAPI:", response);
 
     // Assuming backend returns access and refresh tokens
     if (response.data) {
