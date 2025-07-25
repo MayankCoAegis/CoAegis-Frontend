@@ -1,6 +1,3 @@
-Of course, here is a README file for your React application.
-
------
 
 # CoAegis Frontend 🚀
 
