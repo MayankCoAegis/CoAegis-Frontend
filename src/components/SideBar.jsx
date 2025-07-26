@@ -259,7 +259,7 @@ const ChatTitleComponent = ({ chat, index, chatHistory, setChatHistory }) => {
         />
       )}
       <i
-        className="relative md:group-hover:block md:hidden ri-more-line text-2xl dark:md:text-cyan-300 md:text-cyan-300"
+        className="relative md:group-hover:block md:hidden ri-more-line text-2xl dark:text-gray-300 text-gray-800"
         onClick={() => setIsOptionOpen(!isOptionOpen)}
       >
         <div

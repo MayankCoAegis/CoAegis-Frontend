@@ -1,7 +1,7 @@
 import React, { createContext, use, useEffect, useState } from "react";
 // import Sidebar from "../../components/Sidebar";
 // import ProfilePanel from "../../components/ProfilePanel";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useLoader } from "../contexts/LoaderContext";
 import Sidebar from "../components/SideBar";
 import SelectModel from "../components/SelectModel";
@@ -224,6 +224,8 @@ const ChatLayout = () => {
   const [IsnewChat, setIsnewChat] = useState(false);
   const [newChatHistory, setNewChatHistory] = useState([]);
   const [chatHistory, setChatHistory] = useState([]);
+
+  
 
   useEffect(() => {
     setLoading(true);
