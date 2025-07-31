@@ -10,15 +10,15 @@ export default function Welcome() {
   const [message, setMessage] = useState("");
   const [prompts] = useState([
     {
-      text: "Show me vendors with proven expertise in NLP for customer service automation",
+      text: "Show me vendors with proven expertise in natural language processing for automation in insurance sector",
       icon: "ri-user-line",
     },
     {
-      text: "Filter vendors based on successful project deployments in the insurance industry with measurable ROI",
+      text: "Which vendors offer flexible pricing models?",
       icon: "ri-mail-line",
     },
     {
-      text: "Identify vendors offering solutions that integrate with ERP",
+      text: "Show me vendors with robust data security and compliance certifications such as HIPAA",
       icon: "ri-chat-2-line",
     },
     {
