@@ -8,7 +8,7 @@ export default function HomepagePass({ isOpen, onClose }) {
   const [password, setPassword] = useState("");
 
   const handleVerify = async () => {
-    if (password == "coaegis") {
+    if (password == "Kellogg@2022") {
       onClose();
     }
   };
